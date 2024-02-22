@@ -74,12 +74,7 @@ const RegisterForm = () => {
             fullWidth
             required
           />
-          <Button
-            sx={{ backgroundColor: "#034a96" }}
-            type="submit"
-            variant="contained"
-            fullWidth
-          >
+          <Button color="primary" type="submit" variant="contained" fullWidth>
             Registrarme
           </Button>
           <p>
