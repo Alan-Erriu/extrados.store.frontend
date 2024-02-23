@@ -1,9 +1,11 @@
 import { Box, Grid } from "@mui/material";
-import HomeCard from "../components/HomeCard";
+import HomeOfferCard from "../components/homeItems/HomeOfferCard";
 import { useEffect, useState } from "react";
 import apiClient from "../utils/ApiClient";
-import CarouselBanners from "../components/CarouselBanners";
+import CarouselBanners from "../components/homeItems/CarouselBanners";
 import imgPath from "../utils/Data";
+import HomeCardCategorys from "../components/homeItems/HomeCardCategorys";
+import Progress from "../components/feedBack/Progress";
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState([]);
@@ -30,7 +32,19 @@ const Home = () => {
     fetchData();
   }, []);
   if (isLoading) {
-    return <div>Cargando...</div>;
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100vw",
+          height: "100vh",
+        }}
+      >
+        <Progress />
+      </Box>
+    );
   }
 
   return (
@@ -40,7 +54,7 @@ const Home = () => {
         <Grid container spacing={2}>
           {/* {products.map((p) => (
           <Grid key={p.post_id} item xs={3}>
-            <HomeCard
+            <HomeOfferCard
               name={p.post_name}
               price={p.post_price}
               img={p.post_img}
@@ -48,32 +62,60 @@ const Home = () => {
           </Grid>
         ))} */}
           <Grid item xs={3}>
-            <HomeCard
+            <HomeOfferCard
               name={p.post_name}
               price={p.post_price}
               img={p.post_img}
             />
           </Grid>
           <Grid item xs={3}>
-            <HomeCard
+            <HomeOfferCard
               name={p.post_name}
               price={p.post_price}
               img={p.post_img}
             />
           </Grid>
           <Grid item xs={3}>
-            <HomeCard
+            <HomeOfferCard
               name={p.post_name}
               price={p.post_price}
               img={p.post_img}
             />
           </Grid>
           <Grid item xs={3}>
-            <HomeCard
+            <HomeOfferCard
               name={p.post_name}
               price={p.post_price}
               img={p.post_img}
             />
+          </Grid>
+        </Grid>
+      </Box>
+      <Box sx={{ mt: "150px", ml: "10%", mr: "10%", mb: "150px" }}>
+        <Grid container spacing={2}>
+          <Grid item xs={3}>
+            <HomeCardCategorys />
+          </Grid>
+          <Grid item xs={3}>
+            <HomeCardCategorys />
+          </Grid>
+          <Grid item xs={3}>
+            <HomeCardCategorys />
+          </Grid>
+          <Grid item xs={3}>
+            <HomeCardCategorys />
+          </Grid>
+          <Grid item xs={3}>
+            <HomeCardCategorys />
+          </Grid>
+          <Grid item xs={3}>
+            <HomeCardCategorys />
+          </Grid>
+          <Grid item xs={3}>
+            <HomeCardCategorys />
+          </Grid>
+          <Grid item xs={3}>
+            <HomeCardCategorys />
           </Grid>
         </Grid>
       </Box>

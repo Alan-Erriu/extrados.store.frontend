@@ -82,6 +82,7 @@ function CarouselBanners() {
         ))}
       </AutoPlaySwipeableViews>
       <MobileStepper
+        sx={{ backgroundColor: "#ebebeb" }}
         steps={maxSteps}
         position="static"
         activeStep={activeStep}

@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Nav from "./components/Nav";
 import { ThemeProvider, createTheme } from "@mui/material";
+import ProductDetailPage from "./pages/ProductDetailPage";
 function App() {
   const primary = {
     main: "#034a96",
@@ -33,6 +34,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/product" element={<ProductDetailPage />} />
           </Routes>
         </ThemeProvider>
       </BrowserRouter>

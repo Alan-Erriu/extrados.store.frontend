@@ -3,8 +3,9 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
+import { Link } from "react-router-dom";
 
-export default function HomeCard({ name, price, img }) {
+export default function HomeOfferCard({ name, price, img }) {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia component="img" alt="green iguana" height="140" image={img} />
@@ -13,7 +14,12 @@ export default function HomeCard({ name, price, img }) {
           En oferta
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          <a href="#">{name}</a>
+          <Link
+            to="/product"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            {name}
+          </Link>
         </Typography>
         <Typography variant="body2" color="text.secondary">
           Oferta ${price}
