@@ -16,22 +16,22 @@ const Home = () => {
     post_img: imgPath,
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Solicitud de datos del usuario logueado
-        const response = await apiClient.get("PostSearch/getall");
-        setProducts(response.data);
-        setIsLoading(false);
-      } catch (error) {
-        console.warn("Error", error.message);
-        setIsLoading(false);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       Solicitud de datos del usuario logueado
+  //       const response = await apiClient.get("PostSearch/getall");
+  //       setProducts(response.data);
+  //       setIsLoading(false);
+  //     } catch (error) {
+  //       console.warn("Error", error.message);
+  //       setIsLoading(false);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
-  if (isLoading) {
+  //   fetchData();
+  // }, []);
+  if (!isLoading) {
     return (
       <Box
         sx={{

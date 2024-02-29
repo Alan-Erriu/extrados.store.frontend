@@ -14,10 +14,7 @@ export default function HomeOfferCard({ name, price, img }) {
           En oferta
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          <Link
-            to="/product"
-            style={{ textDecoration: "none", color: "inherit" }}
-          >
+          <Link to="/post" style={{ textDecoration: "none", color: "inherit" }}>
             {name}
           </Link>
         </Typography>

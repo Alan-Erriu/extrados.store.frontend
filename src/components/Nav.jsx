@@ -100,7 +100,7 @@ export default function Nav() {
     >
       <Link to="/login" style={{ textDecoration: "none", color: "inherit" }}>
         {" "}
-        <MenuItem onClick={handleMenuClose}>Iniciar sesion</MenuItem>
+        <MenuItem onClick={handleMenuClose}>Iniciar sesión</MenuItem>
       </Link>
       <Link to="/register" style={{ textDecoration: "none", color: "inherit" }}>
         <MenuItem onClick={handleMenuClose}>Registrarse</MenuItem>
@@ -188,13 +188,20 @@ export default function Nav() {
             </Typography>
           </Link>
           <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
             <StyledInputBase
-              placeholder="Search…"
+              placeholder="Buscar productos…"
               inputProps={{ "aria-label": "search" }}
             />
+            <Link
+              to="/search"
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              {/* <SearchIconWrapper> */}
+              <IconButton>
+                <SearchIcon />
+              </IconButton>
+              {/* </SearchIconWrapper> */}
+            </Link>
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
