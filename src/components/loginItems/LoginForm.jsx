@@ -1,7 +1,26 @@
 import { Button, Container, TextField, Typography } from "@mui/material";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { loginFetch } from "../../services/login/loginFetch";
 
 const LoginForm = () => {
+  const [formData, setFormData] = useState({
+    user_email: "",
+    user_password: "",
+  });
+
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    loginFetch(formData);
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
   return (
     <Container>
       <Typography
@@ -20,7 +39,7 @@ const LoginForm = () => {
       >
         Extrados Store
       </Typography>
-      <form>
+      <form onSubmit={handleFormSubmit}>
         <Container
           sx={{
             width: { xs: "100%", md: "50%" },
@@ -31,19 +50,19 @@ const LoginForm = () => {
         >
           <TextField
             label="Email"
-            name="email"
+            name="user_email"
             type="email"
-            //   value="asd"
-            //   onChange={handleInputChange}
+            value={formData.email}
+            onChange={handleInputChange}
             fullWidth
             required
           />
           <TextField
             label="Password"
-            name="email"
-            type="email"
-            //   value="asd"
-            //   onChange={handleInputChange}
+            name="user_password"
+            type="password"
+            value={formData.password}
+            onChange={handleInputChange}
             fullWidth
             required
           />

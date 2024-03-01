@@ -6,7 +6,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 
-export default function HomeCardCategorys() {
+export default function HomeCardCategorys({ category_name }) {
   const theme = useTheme();
 
   return (
@@ -14,7 +14,7 @@ export default function HomeCardCategorys() {
       <Box sx={{ display: "flex", flexDirection: "column" }}>
         <CardContent sx={{ flex: "1 0 auto" }}>
           <Typography component="div" variant="h5">
-            Antigüedades y Colecciones
+            {category_name}
           </Typography>
         </CardContent>
       </Box>
