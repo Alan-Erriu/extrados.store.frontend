@@ -1,27 +1,11 @@
-import { useEffect, useState } from "react";
 import apiClient from "../ApiClient";
 
-export const UseFetchData = () => {
-  const [loading, setLoading] = useState(true);
-  const [category, setCategory] = useState([]);
-  const [offerPost, setOfferPost] = useState([]);
+export const GetAllCategorys = async () => {
+  const categoryResponse = await apiClient.get("/Category/getcategorys");
+  return categoryResponse.data;
+};
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const postResponse = await apiClient.get("PostSearch/getall");
-        const categoryResponse = await apiClient.get("/Category/getcategorys");
-        setOfferPost(postResponse.data);
-        setCategory(categoryResponse.data);
-      } catch (error) {
-        console.log("Error", error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  return { offerPost, category, loading };
+export const getAllPostActive = async () => {
+  const postResponse = await apiClient.get("PostSearch/getall");
+  return postResponse.data;
 };

@@ -1,30 +1,40 @@
 import { Button, Container, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { registerFetch } from "../../services/register/registerFetch";
 
-const RegisterForm = () => {
+export const CreatePost = () => {
   const [formData, setFormData] = useState({
-    user_name: "",
-    user_lastname: "",
-    user_email: "",
-    user_phone_number: "",
-    user_password_hash: "",
-    user_date_of_birth: "",
+    post_name: "",
+    post_description: "",
+    post_price: "",
+    post_stock: "",
+    post_img: "",
+    brand_id: "",
+    category_id: "",
   });
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    registerFetch(formData);
     console.log(formData);
   };
 
   const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    const { name, value, type, files } = event.target;
+
+    if (type === "file" && files && files[0]) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        setFormData((prevData) => ({
+          ...prevData,
+          [name]: e.target.result,
+        }));
+      };
+      reader.readAsDataURL(files[0]);
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   };
   return (
     <Container>
@@ -42,9 +52,9 @@ const RegisterForm = () => {
           xl: "70px",
         }}
       >
-        Extrados Store
+        Crear publicación
       </Typography>
-      <form onSubmit={handleFormSubmit} v>
+      <form onSubmit={handleFormSubmit}>
         <Container
           sx={{
             width: { xs: "100%", md: "50%" },
@@ -55,7 +65,7 @@ const RegisterForm = () => {
         >
           <TextField
             label="Nombre"
-            name="user_name"
+            name="post_name"
             type="text"
             value={formData.user_name}
             onChange={handleInputChange}
@@ -63,8 +73,8 @@ const RegisterForm = () => {
             required
           />
           <TextField
-            label="Apellido"
-            name="user_lastname"
+            label="Descripción del producto"
+            name="post_description"
             type="text"
             value={formData.user_lastname}
             onChange={handleInputChange}
@@ -72,27 +82,36 @@ const RegisterForm = () => {
             required
           />
           <TextField
-            label="Email"
-            name="user_email"
-            type="email"
+            label="Precio"
+            name="post_price"
+            type="number"
             value={formData.user_email}
             onChange={handleInputChange}
             fullWidth
             required
           />
           <TextField
-            label="Numero de celular"
-            name="user_phone_number"
-            type="tel"
+            label="Stock disponible"
+            name="post_stock"
+            type="number"
             value={formData.user_phone_number}
             onChange={handleInputChange}
             fullWidth
             required
           />
           <TextField
-            label="Password"
-            name="user_password_hash"
-            type="password"
+            label="Marca"
+            name="brand_id"
+            type="number"
+            value={formData.user_password_hash}
+            onChange={handleInputChange}
+            fullWidth
+            required
+          />
+          <TextField
+            label="Categoría"
+            name="category_id"
+            type="number"
             value={formData.user_password_hash}
             onChange={handleInputChange}
             fullWidth
@@ -100,9 +119,9 @@ const RegisterForm = () => {
           />
 
           <TextField
-            label="Fecha de nacimiento"
-            name="user_date_of_birth"
-            type="date"
+            label="Imagen de la publicación"
+            name="post_img"
+            type="file"
             value={formData.user_date_of_birth}
             onChange={handleInputChange}
             fullWidth
@@ -112,16 +131,10 @@ const RegisterForm = () => {
             }}
           />
           <Button color="primary" type="submit" variant="contained" fullWidth>
-            Registrarme
+            Publicar producto
           </Button>
-          <p>
-            ¿Ya tienes una cuenta? inicia sesión
-            <Link to="/login"> aqui</Link>
-          </p>
         </Container>
       </form>
     </Container>
   );
 };
-
-export default RegisterForm;

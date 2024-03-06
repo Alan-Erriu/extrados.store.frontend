@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: "https://localhost:7072/api/",
+  baseURL: process.env.REACT_APP_BACKEND_API_URL,
 });
 
 export default apiClient;

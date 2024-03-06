@@ -2,16 +2,38 @@ import { Button, Container, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { loginFetch } from "../../services/login/loginFetch";
+import { jwtDecode } from "jwt-decode";
+import { useDispatch } from "react-redux";
+import { setLoginData } from "../../redux/userSlice";
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     user_email: "",
     user_password: "",
   });
+  const setUserCredentials = (credentials) => {
+    localStorage.setItem("accessToken", credentials.accessToken);
+    localStorage.setItem("refreshToken", credentials.refreshToken);
+  };
 
-  const handleFormSubmit = (event) => {
-    event.preventDefault();
-    loginFetch(formData);
+  const handleFormSubmit = async (event) => {
+    try {
+      event.preventDefault();
+      const tokens = await loginFetch(formData);
+      setUserCredentials(tokens.data);
+      const decodedToken = jwtDecode(tokens.data.accessToken);
+
+      const user = {
+        userId: decodedToken.nameid,
+        name: decodedToken.name,
+        email: decodedToken.email,
+        role: decodedToken.role,
+      };
+      dispatch(setLoginData(user));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleInputChange = (event) => {

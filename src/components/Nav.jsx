@@ -105,6 +105,12 @@ export default function Nav() {
       <Link to="/register" style={{ textDecoration: "none", color: "inherit" }}>
         <MenuItem onClick={handleMenuClose}>Registrarse</MenuItem>
       </Link>
+      <Link
+        to="/createPost"
+        style={{ textDecoration: "none", color: "inherit" }}
+      >
+        <MenuItem onClick={handleMenuClose}>Publicar un producto</MenuItem>
+      </Link>
     </Menu>
   );
 

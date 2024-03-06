@@ -1,13 +1,37 @@
 import { Box, Grid } from "@mui/material";
 import HomeOfferCard from "../components/homeItems/HomeOfferCard";
 import CarouselBanners from "../components/homeItems/CarouselBanners";
-import imgPath from "../utils/Data";
 import HomeCardCategorys from "../components/homeItems/HomeCardCategorys";
 import Progress from "../components/feedBack/Progress";
-import { UseFetchData } from "../services/home/homeFetch";
+import { useEffect, useState } from "react";
+import { GetAllCategorys, getAllPostActive } from "../services/home/homeFetch";
 const Home = () => {
-  const { offerPost, category, loading } = UseFetchData();
-  console.log(category);
+  const [loading, setLoading] = useState(true);
+  const [category, setCategory] = useState([]);
+  const [post, setPost] = useState([]);
+
+  const getCategorys = async () => {
+    const categorysFromBack = await GetAllCategorys();
+    setCategory(categorysFromBack);
+  };
+  const getPostAllPostActive = async () => {
+    const postActiveFromBack = await getAllPostActive();
+    setPost(postActiveFromBack);
+  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await getCategorys();
+        await getPostAllPostActive();
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
   if (loading) {
     return (
       <Box
@@ -29,7 +53,7 @@ const Home = () => {
       <CarouselBanners />
       <Box sx={{ mt: "50px", ml: "10%", mr: "10%" }}>
         <Grid container spacing={2}>
-          {offerPost.map((p) => (
+          {post.map((p) => (
             <Grid key={p.post_id} item xs={3}>
               <HomeOfferCard
                 name={p.post_name}

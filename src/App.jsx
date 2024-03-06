@@ -8,6 +8,7 @@ import { ThemeProvider } from "@mui/material";
 import PostDetail from "./pages/PostDetail";
 import SearchPost from "./pages/SearchPost";
 import { theme } from "./utils/themeMuiConfig";
+import { CreatePost } from "./pages/CreatePost";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/post" element={<PostDetail />} />
             <Route path="/search" element={<SearchPost />} />
+            <Route path="/createPost" element={<CreatePost />} />
           </Routes>
         </ThemeProvider>
       </BrowserRouter>
