@@ -1,4 +1,4 @@
-import apiClient from "../ApiClient";
+import apiClient from "../axiosConfig/ApiClient";
 
 export const getAllCategorysFetch = async () => {
   const categoryResponse = await apiClient.get("Category/getcategorys");

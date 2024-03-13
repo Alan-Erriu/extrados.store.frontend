@@ -190,7 +190,7 @@ export default function Nav() {
               component="div"
               sx={{ display: { xs: "none", sm: "block" } }}
             >
-              MUI
+              logo
             </Typography>
           </Link>
           <Search>

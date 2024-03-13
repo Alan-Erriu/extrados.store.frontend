@@ -1,4 +1,4 @@
-import apiClient from "../ApiClient";
+import apiClient from "../axiosConfig/ApiClient";
 
 export const createNewPostFetch = async (data) => {
   const tokenLocalStorage = localStorage.getItem("accessToken");
