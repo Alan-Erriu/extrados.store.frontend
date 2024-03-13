@@ -4,18 +4,19 @@ import CarouselBanners from "../components/homeItems/CarouselBanners";
 import HomeCardCategorys from "../components/homeItems/HomeCardCategorys";
 import Progress from "../components/feedBack/Progress";
 import { useEffect, useState } from "react";
-import { GetAllCategorys, getAllPostActive } from "../services/home/homeFetch";
+import { getAllPostActiveFetch } from "../services/home/homeFetch";
+import { getAllCategorysFetch } from "../services/category/categoryFetch";
 const Home = () => {
   const [loading, setLoading] = useState(true);
   const [category, setCategory] = useState([]);
-  const [post, setPost] = useState([]);
+  const [posts, setPost] = useState([]);
 
   const getCategorys = async () => {
-    const categorysFromBack = await GetAllCategorys();
+    const categorysFromBack = await getAllCategorysFetch();
     setCategory(categorysFromBack);
   };
   const getPostAllPostActive = async () => {
-    const postActiveFromBack = await getAllPostActive();
+    const postActiveFromBack = await getAllPostActiveFetch();
     setPost(postActiveFromBack);
   };
   useEffect(() => {
@@ -53,13 +54,9 @@ const Home = () => {
       <CarouselBanners />
       <Box sx={{ mt: "50px", ml: "10%", mr: "10%" }}>
         <Grid container spacing={2}>
-          {post.map((p) => (
-            <Grid key={p.post_id} item xs={3}>
-              <HomeOfferCard
-                name={p.post_name}
-                price={p.post_price}
-                img={p.post_img}
-              />
+          {posts.map((post) => (
+            <Grid key={post.post_id} item xs={3}>
+              <HomeOfferCard post={post} />
             </Grid>
           ))}
         </Grid>

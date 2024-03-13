@@ -1,140 +1,85 @@
-import { Button, Container, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { Box, Typography } from "@mui/material";
+import CreatePostForm from "../components/createPostItems/CreatePostForm";
+import ProductPreviewCard from "../components/createPostItems/ProductPreviewCard";
+import { useDispatch, useSelector } from "react-redux";
+import { getCategorys, setCategorys } from "../redux/categorySlice";
+import { getbrands, setBrands } from "../redux/brandSlice";
+import Progress from "../components/feedBack/Progress";
+import { useEffect } from "react";
+import ErrorNotification from "../components/feedBack/ErrorNotification";
 
 export const CreatePost = () => {
-  const [formData, setFormData] = useState({
-    post_name: "",
-    post_description: "",
-    post_price: "",
-    post_stock: "",
-    post_img: "",
-    brand_id: "",
-    category_id: "",
-  });
+  const categorys = useSelector(getCategorys);
+  const brands = useSelector(getbrands);
+  const dispatch = useDispatch();
 
-  const handleFormSubmit = (event) => {
-    event.preventDefault();
-    console.log(formData);
-  };
-
-  const handleInputChange = (event) => {
-    const { name, value, type, files } = event.target;
-
-    if (type === "file" && files && files[0]) {
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        setFormData((prevData) => ({
-          ...prevData,
-          [name]: e.target.result,
-        }));
-      };
-      reader.readAsDataURL(files[0]);
-    } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    }
-  };
-  return (
-    <Container>
-      <Typography
-        sx={{ mt: { xs: "3rem", md: "8rem" }, mb: "4rem" }}
-        textAlign={"center"}
-        fontFamily={"fantasy"}
-        variant="h3"
-        color="#034a96"
-        fontSize={{
-          xs: "50px",
-          sm: "50px",
-          md: "50px",
-          lg: "60px",
-          xl: "70px",
+  useEffect(() => {
+    dispatch(setCategorys());
+    dispatch(setBrands());
+  }, []);
+  if (categorys.statusFetch === "loading" && brands.statusFetch === "loading") {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100vw",
+          height: "100vh",
         }}
       >
-        Crear publicación
-      </Typography>
-      <form onSubmit={handleFormSubmit}>
-        <Container
-          sx={{
-            width: { xs: "100%", md: "50%" },
-            display: "flex",
-            flexDirection: "column",
-            gap: 2,
+        <Progress />
+      </Box>
+    );
+  }
+  if (categorys.statusFetch === "fail" && brands.statusFetch === "fail") {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100vw",
+          height: "100vh",
+        }}
+      >
+        <ErrorNotification message={"intente mas tarde"} />
+      </Box>
+    );
+  }
+  if (categorys.statusFetch === "success" && brands.statusFetch === "success")
+    return (
+      <Box>
+        <Typography
+          sx={{ mt: { xs: "3rem", md: "3rem" }, mb: "3rem" }}
+          textAlign={"center"}
+          fontFamily={"fantasy"}
+          variant="h3"
+          color="#034a96"
+          fontSize={{
+            xs: "50px",
+            sm: "50px",
+            md: "50px",
+            lg: "60px",
+            xl: "70px",
           }}
         >
-          <TextField
-            label="Nombre"
-            name="post_name"
-            type="text"
-            value={formData.user_name}
-            onChange={handleInputChange}
-            fullWidth
-            required
-          />
-          <TextField
-            label="Descripción del producto"
-            name="post_description"
-            type="text"
-            value={formData.user_lastname}
-            onChange={handleInputChange}
-            fullWidth
-            required
-          />
-          <TextField
-            label="Precio"
-            name="post_price"
-            type="number"
-            value={formData.user_email}
-            onChange={handleInputChange}
-            fullWidth
-            required
-          />
-          <TextField
-            label="Stock disponible"
-            name="post_stock"
-            type="number"
-            value={formData.user_phone_number}
-            onChange={handleInputChange}
-            fullWidth
-            required
-          />
-          <TextField
-            label="Marca"
-            name="brand_id"
-            type="number"
-            value={formData.user_password_hash}
-            onChange={handleInputChange}
-            fullWidth
-            required
-          />
-          <TextField
-            label="Categoría"
-            name="category_id"
-            type="number"
-            value={formData.user_password_hash}
-            onChange={handleInputChange}
-            fullWidth
-            required
-          />
-
-          <TextField
-            label="Imagen de la publicación"
-            name="post_img"
-            type="file"
-            value={formData.user_date_of_birth}
-            onChange={handleInputChange}
-            fullWidth
-            required
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
-          <Button color="primary" type="submit" variant="contained" fullWidth>
-            Publicar producto
-          </Button>
-        </Container>
-      </form>
-    </Container>
-  );
+          Crear publicación
+        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", md: "row" },
+            justifyContent: "center",
+          }}
+        >
+          <Box sx={{ width: "50%" }}>
+            <CreatePostForm />
+          </Box>
+          <Box sx={{ width: "50%" }}>
+            <ProductPreviewCard />
+          </Box>
+        </Box>
+      </Box>
+    );
 };

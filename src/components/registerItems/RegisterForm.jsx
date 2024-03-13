@@ -1,9 +1,17 @@
 import { Button, Container, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { registerFetch } from "../../services/register/registerFetch";
+import ErrorNotification from "../feedBack/ErrorNotification";
+import {
+  emailAlreadyInUse,
+  genericError,
+  phoneNumberAlreadyInUse,
+} from "./errorMessages.js";
 
 const RegisterForm = () => {
+  const navigate = useNavigate();
+  const [error, setError] = useState({ status: false, message: "" });
   const [formData, setFormData] = useState({
     user_name: "",
     user_lastname: "",
@@ -13,10 +21,26 @@ const RegisterForm = () => {
     user_date_of_birth: "",
   });
 
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
-    registerFetch(formData);
-    console.log(formData);
+    try {
+      await registerFetch(formData);
+      navigate("/login");
+    } catch (err) {
+      console.log(err);
+      if (err.response && err.response.data === "The email is already in use")
+        setError(emailAlreadyInUse);
+      else if (
+        err.response &&
+        err.response.data === "The phone number is already in use"
+      )
+        setError(phoneNumberAlreadyInUse);
+      else setError(genericError);
+    } finally {
+      setTimeout(() => {
+        setError({ status: false });
+      }, 5000);
+    }
   };
 
   const handleInputChange = (event) => {
@@ -28,8 +52,9 @@ const RegisterForm = () => {
   };
   return (
     <Container>
+      {error.status ? <ErrorNotification message={error.message} /> : null}
       <Typography
-        sx={{ mt: { xs: "3rem", md: "8rem" }, mb: "4rem" }}
+        sx={{ mt: { xs: "3rem", md: "3rem" }, mb: "4rem" }}
         textAlign={"center"}
         fontFamily={"fantasy"}
         variant="h3"

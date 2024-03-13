@@ -1,16 +1,41 @@
 import { Box, Grid, Typography } from "@mui/material";
-import React from "react";
 import PostDetailImage from "../components/postDetailsItems/PostDetailImage";
 import { PostDetailsAction } from "../components/postDetailsItems/PostDetailsAction";
 import PostDetailDescription from "../components/postDetailsItems/PostDetailDescription";
 import HomeOfferCard from "../components/homeItems/HomeOfferCard";
+import { useParams } from "react-router-dom";
 import imgPath from "../utils/Data";
+import { useState, useEffect } from "react";
+import { getPostByIdFetch } from "../services/postDetail/postDetail";
+import { getTokensFetch } from "../services/refreshToken/getTokensFetch";
 const PostDetail = () => {
-  let p = {
-    post_name: "zapatillas nike",
-    post_price: "30000.99",
-    post_img: imgPath,
+  const { id } = useParams();
+  const [post, setPost] = useState({
+    post_name: "",
+    post_description: "",
+    post_price: null,
+    post_stock: null,
+    category_id: null,
+    brand_id: null,
+    post_img: "",
+    statusFetch: "",
+  });
+  const getPostById = async () => {
+    try {
+      await getTokensFetch();
+      const postFromBack = await getPostByIdFetch(id);
+      console.log(postFromBack);
+      return postFromBack;
+    } catch (error) {
+      console.log(error);
+    }
   };
+  // useEffect(() => {
+  //   const postResponse = getPostById();
+  //   setPost(postResponse);
+  //   console.log(post);
+  // }, []);
+
   return (
     <Box sx={{ width: "60%", ml: "20%", mr: "20%", mt: "50px" }}>
       <Box
@@ -26,7 +51,7 @@ const PostDetail = () => {
       <Box sx={{ display: "flex", backgroundColor: "white", width: "100%" }}>
         <PostDetailDescription />
       </Box>
-      <Box sx={{ width: "100%", mt: 15 }}>
+      {/* <Box sx={{ width: "100%", mt: 15 }}>
         <Typography sx={{ mb: "10px" }}>Productos relacionados</Typography>
         <Grid container spacing={2}>
           <Grid item xs={3}>
@@ -59,7 +84,7 @@ const PostDetail = () => {
             />
           </Grid>
         </Grid>
-      </Box>
+      </Box> */}
     </Box>
   );
 };

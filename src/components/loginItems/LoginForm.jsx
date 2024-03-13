@@ -1,38 +1,50 @@
 import { Button, Container, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import ErrorNotification from "../feedBack/ErrorNotification";
 import { loginFetch } from "../../services/login/loginFetch";
-import { jwtDecode } from "jwt-decode";
-import { useDispatch } from "react-redux";
-import { setLoginData } from "../../redux/userSlice";
-
+import { getClaims, setLocalUserCredentials } from "../../auxFunc/user";
 const LoginForm = () => {
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [error, setError] = useState({ status: false, message: "" });
   const [formData, setFormData] = useState({
     user_email: "",
     user_password: "",
   });
-  const setUserCredentials = (credentials) => {
-    localStorage.setItem("accessToken", credentials.accessToken);
-    localStorage.setItem("refreshToken", credentials.refreshToken);
-  };
 
   const handleFormSubmit = async (event) => {
+    event.preventDefault();
     try {
-      event.preventDefault();
       const tokens = await loginFetch(formData);
-      setUserCredentials(tokens.data);
-      const decodedToken = jwtDecode(tokens.data.accessToken);
-
-      const user = {
-        userId: decodedToken.nameid,
-        name: decodedToken.name,
-        email: decodedToken.email,
-        role: decodedToken.role,
-      };
-      dispatch(setLoginData(user));
-    } catch (error) {
-      console.log(error);
+      const userCrendentilas = getClaims(tokens.data);
+      setLocalUserCredentials(userCrendentilas);
+      navigate("/");
+    } catch (err) {
+      if (err.response && err.response.status === 401) {
+        setError({
+          status: true,
+          message: "Contraseña incorrecta",
+        });
+      } else if (err.response && err.response.status === 404) {
+        setError({
+          status: true,
+          message: "Email incorrecto",
+        });
+      } else {
+        setError({
+          status: true,
+          message: "Intente más tarde",
+        });
+      }
+      console.log(err);
+    } finally {
+      setTimeout(() => {
+        setError({
+          status: false,
+          message: "",
+        });
+      }, 5000);
     }
   };
 
@@ -45,6 +57,7 @@ const LoginForm = () => {
   };
   return (
     <Container>
+      {error.status ? <ErrorNotification message={error.message} /> : null}
       <Typography
         sx={{ mt: { xs: "3rem", md: "8rem" }, mb: "4rem" }}
         textAlign={"center"}

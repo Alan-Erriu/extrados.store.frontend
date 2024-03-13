@@ -1,7 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import userSlice from "./userSlice";
+import newPostSlice from "./createNewPostSlice";
+import categorySlice from "./categorySlice";
+import brandSlice from "./brandSlice";
 export const store = configureStore({
   reducer: {
-    user: userSlice,
+    // user: userSlice,
+    newPostState: newPostSlice,
+    categoryState: categorySlice,
+    brandState: brandSlice,
   },
 });
