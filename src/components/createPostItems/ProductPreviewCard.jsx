@@ -1,7 +1,7 @@
 import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
-import { getNewPost } from "../../redux/createNewPostSlice";
+import { getNewPost } from "../../redux/post/createNewPostSlice";
 
 const ProductPreviewCard = ({}) => {
   const post = useSelector(getNewPost);

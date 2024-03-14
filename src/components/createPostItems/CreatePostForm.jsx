@@ -1,7 +1,7 @@
 import { Button, Container, MenuItem, Select, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createNewPost, setNewPost } from "../../redux/createNewPostSlice";
+import { createNewPost, setNewPost } from "../../redux/post/createNewPostSlice";
 import { getCategorys, setCategorys } from "../../redux/categorySlice";
 import { getbrands, setBrands } from "../../redux/brandSlice";
 

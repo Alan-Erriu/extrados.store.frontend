@@ -3,7 +3,7 @@ import apiClient from "../services/axiosConfig/ApiClient";
 import { getTokensFetch } from "../services/refreshToken/getTokensFetch";
 
 export const AxiosInterceptor = () => {
-  apiClient.interceptors.request.use((request) => {
+  apiClient.interceptors.request.use(async (request) => {
     if (!request.headers.Authorization) return request;
     try {
       const tokenLocal = localStorage.getItem("accessToken");
@@ -12,7 +12,7 @@ export const AxiosInterceptor = () => {
       const currentTimeEpoch = new Date().getTime();
 
       if (expirationTimeEpoch > currentTimeEpoch) return request;
-      getTokensFetch();
+      await getTokensFetch();
       request.headers.Authorization = `Bearer ${localStorage.getItem(
         "accessToken"
       )}`;

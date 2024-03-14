@@ -17,7 +17,7 @@ export const CreatePost = () => {
     dispatch(setCategorys());
     dispatch(setBrands());
   }, []);
-  if (categorys.statusFetch === "loading" && brands.statusFetch === "loading") {
+  if (categorys.statusFetch === "loading" || brands.statusFetch === "loading") {
     return (
       <Box
         sx={{

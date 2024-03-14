@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createNewPostFetch } from "../services/createNewPost/createNewPostFetch";
+import { createNewPostFetch } from "../../services/createNewPost/createNewPostFetch";
 
 const newPostState = {
   post_name: "",

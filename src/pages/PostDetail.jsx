@@ -4,8 +4,7 @@ import { PostDetailsAction } from "../components/postDetailsItems/PostDetailsAct
 import PostDetailDescription from "../components/postDetailsItems/PostDetailDescription";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
-import { getPostByIdFetch } from "../services/postDetail/postDetail";
-import { getTokensFetch } from "../services/refreshToken/getTokensFetch";
+import { getPostByIdFetch } from "../services/post/postDetail";
 const PostDetail = () => {
   const { id } = useParams();
   const [post, setPost] = useState({
