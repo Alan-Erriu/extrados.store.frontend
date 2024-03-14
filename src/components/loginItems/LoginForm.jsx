@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import ErrorNotification from "../feedBack/ErrorNotification";
 import { loginFetch } from "../../services/login/loginFetch";
-import { getClaims, setLocalUserCredentials } from "../../auxFunc/user";
+import { getClaims, setLocalUserCredentials } from "../../utilities/user";
 const LoginForm = () => {
   const navigate = useNavigate();
   const [error, setError] = useState({ status: false, message: "" });

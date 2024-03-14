@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { createNewPostFetch } from "../services/createNewPost/createNewPostFetch";
-import { getTokensFetch } from "../services/refreshToken/getTokensFetch";
 
 const newPostState = {
   post_name: "",
@@ -16,7 +15,7 @@ const newPostState = {
 export const createNewPost = createAsyncThunk(
   "post/createPost",
   async (formDataNewPost) => {
-    await getTokensFetch();
+    // await getTokensFetch();
     const response = await createNewPostFetch(formDataNewPost);
     return response.data;
   }

@@ -1,15 +1,8 @@
 import Login from "./pages/Login";
 import "./index.css";
-import {
-  BrowserRouter,
-  Route,
-  RouterProvider,
-  Routes,
-  createBrowserRouter,
-} from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
-import Nav from "./components/layout/Nav";
 import PostDetail from "./pages/PostDetail";
 import SearchPost from "./pages/SearchPost";
 import { CreatePost } from "./pages/CreatePost";

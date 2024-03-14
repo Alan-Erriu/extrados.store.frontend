@@ -19,17 +19,17 @@ const Home = () => {
     const postActiveFromBack = await getAllPostActiveFetch();
     setPost(postActiveFromBack);
   };
+  const fetchData = async () => {
+    try {
+      await getCategorys();
+      await getPostAllPostActive();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await getCategorys();
-        await getPostAllPostActive();
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchData();
   }, []);
 

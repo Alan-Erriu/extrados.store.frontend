@@ -1,11 +1,9 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import PostDetailImage from "../components/postDetailsItems/PostDetailImage";
 import { PostDetailsAction } from "../components/postDetailsItems/PostDetailsAction";
 import PostDetailDescription from "../components/postDetailsItems/PostDetailDescription";
-import HomeOfferCard from "../components/homeItems/HomeOfferCard";
 import { useParams } from "react-router-dom";
-import imgPath from "../utils/Data";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { getPostByIdFetch } from "../services/postDetail/postDetail";
 import { getTokensFetch } from "../services/refreshToken/getTokensFetch";
 const PostDetail = () => {
@@ -22,7 +20,6 @@ const PostDetail = () => {
   });
   const getPostById = async () => {
     try {
-      await getTokensFetch();
       const postFromBack = await getPostByIdFetch(id);
       console.log(postFromBack);
       return postFromBack;
