@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import { theme } from "./styles/themeMuiConfig";
 import { ThemeProvider } from "@emotion/react";
-import { AxiosInterceptor } from "./services/interceptor/axiosInterceptor";
+import { AxiosInterceptor } from "./interceptors/axiosInterceptor";
 
 AxiosInterceptor();
 

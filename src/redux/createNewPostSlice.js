@@ -15,7 +15,6 @@ const newPostState = {
 export const createNewPost = createAsyncThunk(
   "post/createPost",
   async (formDataNewPost) => {
-    // await getTokensFetch();
     const response = await createNewPostFetch(formDataNewPost);
     return response.data;
   }

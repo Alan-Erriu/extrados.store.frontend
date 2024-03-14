@@ -6,9 +6,16 @@ import { Outlet } from "react-router-dom";
 
 export const Layout = () => {
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "100vh",
+        backgroundColor: "#ebebeb;",
+      }}
+    >
       <Nav />
-      <Box sx={{ backgroundColor: "#ebebeb;" }}>
+      <Box>
         <Outlet />
       </Box>
       <Footer />
