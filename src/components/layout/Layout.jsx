@@ -8,7 +8,7 @@ export const Layout = () => {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <Nav />
-      <Box>
+      <Box sx={{ backgroundColor: "#ebebeb;" }}>
         <Outlet />
       </Box>
       <Footer />

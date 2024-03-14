@@ -1,5 +1,5 @@
 import Login from "./pages/Login";
-import "./index.css";
+import "./styles/index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Register from "./pages/Register";
 import Home from "./pages/Home";

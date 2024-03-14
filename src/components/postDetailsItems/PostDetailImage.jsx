@@ -1,6 +1,6 @@
 import { CardMedia } from "@mui/material";
 import React from "react";
-import imgagePath from "../../utilities/Data";
+import imgagePath from "../../utilities/Data.utilities";
 const PostDetailImage = () => {
   return (
     <CardMedia
