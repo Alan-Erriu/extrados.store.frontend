@@ -69,7 +69,7 @@ const RegisterForm = () => {
       >
         Extrados Store
       </Typography>
-      <form onSubmit={handleFormSubmit} v>
+      <form onSubmit={handleFormSubmit}>
         <Container
           sx={{
             width: { xs: "100%", md: "50%" },

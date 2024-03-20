@@ -11,7 +11,6 @@ const newPostState = {
   post_img: "",
   statusFetch: "",
 };
-
 export const createNewPost = createAsyncThunk(
   "post/createPost",
   async (formDataNewPost) => {
@@ -27,24 +26,24 @@ export const newPostSlice = createSlice({
     setNewPost: (state, action) => {
       return { ...state, ...action.payload };
     },
+    resetSate: (state, payload) => {
+      state.statusFetch = "";
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(createNewPost.pending, (state, action) => {
         state.statusFetch = "loading";
-        console.log("estoy en loading case");
       })
       .addCase(createNewPost.fulfilled, (state, action) => {
         state.statusFetch = "success";
-        console.log("estoy en success case");
       })
       .addCase(createNewPost.rejected, (state, action) => {
-        console.log("estoy en rejected case");
         console.error(action.error);
         state.statusFetch = "fail";
       });
   },
 });
 export const getNewPost = (state) => state.newPostState;
-export const { setNewPost } = newPostSlice.actions;
+export const { setNewPost, resetSate } = newPostSlice.actions;
 export default newPostSlice.reducer;

@@ -3,34 +3,18 @@ import PostDetailImage from "../components/postDetailsItems/PostDetailImage";
 import { PostDetailsAction } from "../components/postDetailsItems/PostDetailsAction";
 import PostDetailDescription from "../components/postDetailsItems/PostDetailDescription";
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getPostByIdFetch } from "../services/post/postDetail";
+import { useDispatch, useSelector } from "react-redux";
+import { setPostDetail } from "../redux/post/postDetailSlice";
 const PostDetail = () => {
   const { id } = useParams();
-  const [post, setPost] = useState({
-    post_name: "",
-    post_description: "",
-    post_price: null,
-    post_stock: null,
-    category_id: null,
-    brand_id: null,
-    post_img: "",
-    statusFetch: "",
-  });
-  const getPostById = async () => {
-    try {
-      const postFromBack = await getPostByIdFetch(id);
-      console.log(postFromBack);
-      return postFromBack;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  // useEffect(() => {
-  //   const postResponse = getPostById();
-  //   setPost(postResponse);
-  //   console.log(post);
-  // }, []);
+  const dispatch = useDispatch();
+  const post = useSelector((state) => state.postsDetailState);
+
+  useEffect(() => {
+    dispatch(setPostDetail(id));
+  }, []);
 
   return (
     <Box sx={{ width: "60%", ml: "20%", mr: "20%", mt: "50px" }}>

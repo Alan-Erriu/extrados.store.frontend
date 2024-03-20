@@ -1,9 +1,13 @@
 import { Button, Container, MenuItem, Select, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createNewPost, setNewPost } from "../../redux/post/createNewPostSlice";
-import { getCategorys, setCategorys } from "../../redux/categorySlice";
-import { getbrands, setBrands } from "../../redux/brandSlice";
+import { getbrands } from "../../redux/brandSlice";
+import { getCategorys } from "../../redux/categorySlice";
+import {
+  createNewPost,
+  resetSate,
+  setNewPost,
+} from "../../redux/post/createNewPostSlice";
 
 const CreatePostForm = () => {
   const dispatch = useDispatch();
@@ -25,6 +29,9 @@ const CreatePostForm = () => {
   const handleFormSubmit = (event) => {
     event.preventDefault();
     dispatch(createNewPost(formData));
+    setTimeout(() => {
+      dispatch(resetSate());
+    }, 3000);
   };
 
   const handleInputChange = (event) => {
@@ -168,25 +175,3 @@ const CreatePostForm = () => {
 };
 
 export default CreatePostForm;
-
-{
-  /* <Select
-sx={{ width: "250px", backgroundColor: "white", color: "black" }}
-variant="outlined"
-displayEmpty
-value={}
-onChange={handleGroomerChange}
-renderValue={(value) =>
-  value ? getGroomerName(value) : "Seleccione una marca"
-}
->
-<MenuItem value="" disabled>
-  Seleccione un peluquero
-</MenuItem>
-{allGroomersData.groomers.map((groomer) => (
-  <MenuItem key={groomer._id} value={groomer._id}>
-    {groomer.name}
-  </MenuItem>
-))}
-</Select> */
-}
