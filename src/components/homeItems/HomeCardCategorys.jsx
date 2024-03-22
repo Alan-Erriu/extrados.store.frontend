@@ -6,9 +6,8 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 
-export default function HomeCardCategorys({ category_name }) {
+export default function HomeCardCategorys({ category_name, category_img }) {
   const theme = useTheme();
-
   return (
     <Card sx={{ display: "flex" }}>
       <Box sx={{ display: "flex", flexDirection: "column" }}>
@@ -21,7 +20,7 @@ export default function HomeCardCategorys({ category_name }) {
       <CardMedia
         component="img"
         sx={{ width: 151 }}
-        image="https://http2.mlstatic.com/storage/homes-korriban/assets/icons/xxhdpi/home_hourglass-category.webp"
+        image={category_img}
         alt="Live from space album cover"
       />
     </Card>

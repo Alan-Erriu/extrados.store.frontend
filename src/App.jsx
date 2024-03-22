@@ -7,12 +7,13 @@ import PostDetail from "./pages/PostDetail";
 import SearchPost from "./pages/SearchPost";
 import { CreatePost } from "./pages/CreatePost";
 import { Layout } from "./components/layout/Layout";
+import ErrorNotFound from "./pages/ErrorNotFound";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
-    errorElement: <Login />,
+    errorElement: <ErrorNotFound />,
     children: [
       {
         path: "",
@@ -31,7 +32,7 @@ const router = createBrowserRouter([
         element: <PostDetail />,
       },
       {
-        path: "/search",
+        path: "/search/:postName",
         element: <SearchPost />,
       },
       {

@@ -1,4 +1,3 @@
-import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -14,8 +13,9 @@ import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { useState } from "react";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -58,8 +58,17 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Nav() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [postName, setpostName] = useState("");
+  const navigate = useNavigate();
+  const handleInputChange = (event) => {
+    setpostName(event.target.value);
+  };
+  const handleSerchPost = () => {
+    if (postName != "") navigate(`/search/${postName}`);
+  };
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -197,17 +206,13 @@ export default function Nav() {
             <StyledInputBase
               placeholder="Buscar productos…"
               inputProps={{ "aria-label": "search" }}
+              value={postName}
+              onChange={handleInputChange}
             />
-            <Link
-              to="/search"
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
-              {/* <SearchIconWrapper> */}
-              <IconButton>
-                <SearchIcon />
-              </IconButton>
-              {/* </SearchIconWrapper> */}
-            </Link>
+
+            <IconButton onClick={handleSerchPost}>
+              <SearchIcon />
+            </IconButton>
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>

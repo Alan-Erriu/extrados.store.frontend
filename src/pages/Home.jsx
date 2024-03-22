@@ -78,7 +78,10 @@ const Home = () => {
           {categorys &&
             categorys.map((c) => (
               <Grid key={c.category_id} item xs={3}>
-                <HomeCardCategorys category_name={c.category_name} />
+                <HomeCardCategorys
+                  category_name={c.category_name}
+                  category_img={c.category_img}
+                />
               </Grid>
             ))}
         </Grid>
