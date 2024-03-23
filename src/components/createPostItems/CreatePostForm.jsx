@@ -1,18 +1,18 @@
 import { Button, Container, MenuItem, Select, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getbrands } from "../../redux/brandSlice";
-import { getCategorys } from "../../redux/categorySlice";
+import { useDispatch } from "react-redux";
+
 import {
   createNewPost,
   resetSate,
   setNewPost,
 } from "../../redux/post/createNewPostSlice";
+import { useCategoryAndBrandFetch } from "../../hooks/useCategoryAndBrandFetch";
 
 const CreatePostForm = () => {
   const dispatch = useDispatch();
-  const categorys = useSelector(getCategorys);
-  const brands = useSelector(getbrands);
+  const { allCategorys, allBrands, loading, error } =
+    useCategoryAndBrandFetch();
   const [formData, setFormData] = useState({
     post_name: "",
     post_description: "",
@@ -103,7 +103,7 @@ const CreatePostForm = () => {
           displayEmpty
           onChange={handleInputChange}
           renderValue={(value) => {
-            const selectedCategory = categorys.categorys.find(
+            const selectedCategory = allCategorys.find(
               (category) => category.category_id === value
             );
             return selectedCategory
@@ -112,7 +112,7 @@ const CreatePostForm = () => {
           }}
         >
           <MenuItem disabled>Seleccione una categoría</MenuItem>
-          {categorys.categorys.map((category) => (
+          {allCategorys.map((category) => (
             <MenuItem key={category.category_id} value={category.category_id}>
               {category.category_name}
             </MenuItem>
@@ -127,7 +127,7 @@ const CreatePostForm = () => {
           displayEmpty
           onChange={handleInputChange}
           renderValue={(value) => {
-            const selectedBrand = brands.brands.find(
+            const selectedBrand = allBrands.find(
               (brand) => brand.brand_id === value
             );
             return selectedBrand
@@ -136,7 +136,7 @@ const CreatePostForm = () => {
           }}
         >
           <MenuItem disabled>Seleccione una marca</MenuItem>
-          {brands.brands.map((brand) => (
+          {allBrands.map((brand) => (
             <MenuItem key={brand.brand_id} value={brand.brand_id}>
               {brand.brand_name}
             </MenuItem>

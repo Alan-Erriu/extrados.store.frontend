@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { getAllBrandsFetch } from "../services/brand/brandFetch";
+import { getAllCategorysFetch } from "../services/category/categoryFetch";
 
 export const useCategoryAndBrandFetch = () => {
-  const [categorys, setCategorys] = useState([]);
-  const [brands, setBrands] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [allCategorys, setAllCategorys] = useState([]);
+  const [allBrands, setAllBrands] = useState([]);
+  const [categoryAndBrandloading, setcategoryAndBrandloading] = useState(true);
   const [error, setError] = useState({
     status: false,
     msg: "",
@@ -15,19 +16,19 @@ export const useCategoryAndBrandFetch = () => {
       try {
         const categorysResponse = await getAllCategorysFetch();
         const brandsResponse = await getAllBrandsFetch();
-        setCategorys(categorysResponse);
-        setBrands(brandsResponse);
-        setLoading(false);
+        setAllCategorys(categorysResponse);
+        setAllBrands(brandsResponse);
+        setcategoryAndBrandloading(false);
       } catch (error) {
-        setLoading(false);
+        setcategoryAndBrandloading(false);
         setError({
           status: true,
           msg: error.message,
         });
         console.log(error);
       }
-      fetchData();
     };
+    fetchData();
   }, []);
-  return { categorys, brands, loading, error };
+  return { allCategorys, allBrands, categoryAndBrandloading, error };
 };

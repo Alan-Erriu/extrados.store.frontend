@@ -13,19 +13,15 @@ const PostDetail = () => {
   const dispatch = useDispatch();
   const post = useSelector((state) => state.postsDetailState.post);
   const [relatedPost, setRelatedPost] = useState([]);
-
+  const [allPost, setAllPost] = useState([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
       try {
         dispatch(setPostDetail(id));
         const responsePost = await getAllPostActiveFetch();
-        const filteredPosts = responsePost.filter(
-          (p) => p.category_name === post.category_name
-        );
-        const limitedPosts = filteredPosts.slice(0, 4);
-        setRelatedPost(limitedPosts);
-
-        console.log(post);
+        setAllPost(responsePost);
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -33,6 +29,16 @@ const PostDetail = () => {
 
     fetchData();
   }, [dispatch, id]);
+
+  useEffect(() => {
+    if (!loading) {
+      const filteredPosts = allPost.filter(
+        (p) => p.category_name === post.category_name
+      );
+      const limitedPosts = filteredPosts.slice(0, 4);
+      setRelatedPost(limitedPosts);
+    }
+  }, [loading]);
 
   return (
     <Box sx={{ width: "60%", ml: "20%", mr: "20%", mt: "50px" }}>

@@ -1,44 +1,57 @@
 import { Box, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import HomeOfferCard from "../components/homeItems/HomeOfferCard";
 import FiltersSearch from "../components/searchPostItems/FiltersSearch";
-import { setBrands } from "../redux/brandSlice";
-import { setCategorys } from "../redux/categorySlice";
+import { useCategoryAndBrandFetch } from "../hooks/useCategoryAndBrandFetch";
 import { searchPostFetch } from "../services/post/searchPost";
 
 const SearchPost = () => {
   const { postName } = useParams();
-  const dispatch = useDispatch();
-  const categorys = useSelector((state) => state.categoryState.categorys);
-  const brands = useSelector((state) => state.brandState.brands);
   const [categoryState, setCategoryState] = useState("");
   const [brandState, setBrandState] = useState("");
+  const [postLoading, setPostLoading] = useState(true);
   const [posts, setPosts] = useState([]);
-  //para el endpoint necesito que los valores enten en 0 y los formularios no aceptan 0 en los values(por eso las ternarias)
-  const data = {
-    postName: postName,
-    postCategoryId: categoryState === "" ? 0 : categoryState,
-    postBrandId: brandState === "" ? 0 : brandState,
-  };
+  const [categorysFiltered, setCategorysFiltered] = useState([]);
+  const [brandsFiltered, setBrandsFiltered] = useState([]);
 
-  useEffect(() => {
-    dispatch(setCategorys());
-    dispatch(setBrands());
-  }, []);
+  const { allCategorys, allBrands, categoryAndBrandloading, error } =
+    useCategoryAndBrandFetch();
 
   useEffect(() => {
     const getPostByName = async () => {
+      const data = {
+        postName: postName,
+        postCategoryId: categoryState === "" ? 0 : categoryState,
+        postBrandId: brandState === "" ? 0 : brandState,
+      };
       try {
         const postsResponse = await searchPostFetch(data);
         setPosts(postsResponse);
+        setPostLoading(false);
       } catch (error) {
         console.log(error);
       }
     };
     getPostByName();
   }, [postName, categoryState, brandState]);
+
+  useEffect(() => {
+    if (!postLoading) {
+      const uniqueCategorys = [
+        ...new Set(posts.map((post) => post.category_name)),
+      ];
+      const categorysRelatedToPost = allCategorys.filter((category) =>
+        uniqueCategorys.includes(category.category_name)
+      );
+      const uniqueBrands = [...new Set(posts.map((post) => post.brand_name))];
+      const brandRelatedToPost = allBrands.filter((brand) =>
+        uniqueBrands.includes(brand.brand_name)
+      );
+      setCategorysFiltered(categorysRelatedToPost);
+      setBrandsFiltered(brandRelatedToPost);
+    }
+  }, [postLoading]);
 
   return (
     <Box sx={{ display: "flex", mt: "50px", ml: "10%", mr: "10%" }}>
@@ -47,8 +60,8 @@ const SearchPost = () => {
           props={{
             setCategoryState,
             setBrandState,
-            categorys,
-            brands,
+            brandsFiltered,
+            categorysFiltered,
             categoryState,
             brandState,
           }}

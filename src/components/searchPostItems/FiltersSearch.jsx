@@ -2,8 +2,8 @@ import { Box, MenuItem, Select } from "@mui/material";
 
 const FiltersSearch = ({
   props: {
-    categorys,
-    brands,
+    brandsFiltered,
+    categorysFiltered,
     setCategoryState,
     setBrandState,
     categoryState,
@@ -31,7 +31,7 @@ const FiltersSearch = ({
         displayEmpty
         onChange={handleInputChangeCategory}
         renderValue={(value) => {
-          const selectedCategory = categorys.find(
+          const selectedCategory = categorysFiltered.find(
             (category) => category.category_id === value
           );
           return selectedCategory
@@ -40,8 +40,8 @@ const FiltersSearch = ({
         }}
       >
         <MenuItem disabled>Seleccione una categoría</MenuItem>
-        {categorys &&
-          categorys.map((category) => (
+        {categorysFiltered &&
+          categorysFiltered.map((category) => (
             <MenuItem key={category.category_id} value={category.category_id}>
               {category.category_name}
             </MenuItem>
@@ -56,7 +56,7 @@ const FiltersSearch = ({
         displayEmpty
         onChange={handleInputChangeBrand}
         renderValue={(value) => {
-          const selectedBrand = brands.find(
+          const selectedBrand = brandsFiltered.find(
             (brand) => brand.brand_id === value
           );
           return selectedBrand
@@ -65,8 +65,8 @@ const FiltersSearch = ({
         }}
       >
         <MenuItem disabled>Seleccione una Marca</MenuItem>
-        {brands &&
-          brands.map((brand) => (
+        {brandsFiltered &&
+          brandsFiltered.map((brand) => (
             <MenuItem key={brand.brand_id} value={brand.brand_id}>
               {brand.brand_name}
             </MenuItem>
