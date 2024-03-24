@@ -9,20 +9,32 @@ import Typography from "@mui/material/Typography";
 export default function HomeCardCategorys({ category_name, category_img }) {
   const theme = useTheme();
   return (
-    <Card sx={{ display: "flex" }}>
-      <Box sx={{ display: "flex", flexDirection: "column" }}>
-        <CardContent sx={{ flex: "1 0 auto" }}>
-          <Typography component="div" variant="h5">
-            {category_name}
-          </Typography>
-        </CardContent>
-      </Box>
-      <CardMedia
-        component="img"
-        sx={{ width: 151 }}
-        image={category_img}
-        alt="Live from space album cover"
-      />
+    <Card sx={{ display: "flex", height: 150, width: 300 }}>
+      <CardContent
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          justifyItems: "baseline",
+          alignItems: "center",
+          gap: 4,
+        }}
+      >
+        <CardMedia
+          component="img"
+          sx={{
+            width: 100,
+            height: 100,
+            objectFit: "contain",
+          }}
+          image={category_img}
+          alt={category_name}
+        />
+
+        <Typography component="div" variant="h5">
+          {category_name}
+        </Typography>
+      </CardContent>
     </Card>
   );
 }

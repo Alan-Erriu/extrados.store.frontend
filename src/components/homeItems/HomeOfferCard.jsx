@@ -12,14 +12,15 @@ export default function HomeOfferCard({ post }) {
       to={`/post/${post_id}`}
       style={{ textDecoration: "none", color: "inherit" }}
     >
-      <Card sx={{ width: 345, height: 350 }}>
-        <CardMedia
-          component="img"
-          alt="green iguana"
-          height="200"
-          image={post_img}
-        />
+      <Card sx={{ width: 375, height: 350 }}>
         <CardContent>
+          <CardMedia
+            component="img"
+            alt="green iguana"
+            height="200"
+            image={post_img}
+            sx={{ objectFit: "contain" }}
+          />
           <Typography gutterBottom variant="h5" component="div">
             En oferta
           </Typography>

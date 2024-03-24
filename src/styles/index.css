@@ -2,3 +2,16 @@
   margin: 0;
   padding: 0;
 }
+/* estas clases pertenecen a la libreria slick */
+.slick-arrow {
+  color: #000 !important;
+  background-color: white !important;
+  border-radius: 50%;
+}
+.slick-prev,
+.slick-next {
+  font-size: 50px !important;
+  color: #000 !important;
+  z-index: 1 !important;
+}
+/*--------------------------------------------------- fin de la clas slick   */

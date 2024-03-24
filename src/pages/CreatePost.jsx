@@ -1,24 +1,17 @@
 import { Box, Typography } from "@mui/material";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import CreatePostForm from "../components/createPostItems/CreatePostForm";
 import ProductPreviewCard from "../components/createPostItems/ProductPreviewCard";
 import ErrorNotification from "../components/feedBack/ErrorNotification";
 import Progress from "../components/feedBack/Progress";
-import { getbrands, setBrands } from "../redux/brandSlice";
-import { getCategorys, setCategorys } from "../redux/categorySlice";
+import { useCategoryAndBrandFetch } from "../hooks/useCategoryAndBrandFetch";
+import { useSelector } from "react-redux";
 
 export const CreatePost = () => {
-  const categorys = useSelector(getCategorys);
-  const brands = useSelector(getbrands);
-  const errorFetchForm = useSelector((state) => state.newPostState);
-  const dispatch = useDispatch();
+  const { allCategorys, allBrands, categoryAndBrandloading, error } =
+    useCategoryAndBrandFetch();
 
-  useEffect(() => {
-    dispatch(setCategorys());
-    dispatch(setBrands());
-  }, []);
-  if (categorys.statusFetch === "loading" || brands.statusFetch === "loading") {
+  const errorFetchForm = useSelector((state) => state.newPostState.statusFetch);
+  if (categoryAndBrandloading) {
     return (
       <Box
         sx={{
@@ -33,7 +26,7 @@ export const CreatePost = () => {
       </Box>
     );
   }
-  if (categorys.statusFetch === "fail" && brands.statusFetch === "fail") {
+  if (error.status) {
     return (
       <Box
         sx={{
@@ -44,7 +37,7 @@ export const CreatePost = () => {
           height: "100vh",
         }}
       >
-        <ErrorNotification message={"intente mas tarde"} />
+        <ErrorNotification message={error.msg} />
       </Box>
     );
   }
@@ -66,7 +59,7 @@ export const CreatePost = () => {
       >
         Crear publicación
       </Typography>
-      {errorFetchForm && errorFetchForm.statusFetch === "fail" ? (
+      {errorFetchForm && errorFetchForm === "fail" ? (
         <ErrorNotification message={"intente mas tarde"} />
       ) : null}
       <Box
@@ -77,7 +70,7 @@ export const CreatePost = () => {
         }}
       >
         <Box sx={{ width: "50%" }}>
-          <CreatePostForm />
+          <CreatePostForm allCategorys={allCategorys} allBrands={allBrands} />
         </Box>
         <Box sx={{ width: "50%" }}>
           <ProductPreviewCard />

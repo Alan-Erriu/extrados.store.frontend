@@ -7,12 +7,10 @@ import {
   resetSate,
   setNewPost,
 } from "../../redux/post/createNewPostSlice";
-import { useCategoryAndBrandFetch } from "../../hooks/useCategoryAndBrandFetch";
 
-const CreatePostForm = () => {
+const CreatePostForm = ({ allCategorys, allBrands }) => {
   const dispatch = useDispatch();
-  const { allCategorys, allBrands, loading, error } =
-    useCategoryAndBrandFetch();
+
   const [formData, setFormData] = useState({
     post_name: "",
     post_description: "",

@@ -1,4 +1,4 @@
-import { Card } from "@mui/material";
+import { Card, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 
 const PostDetailDescription = () => {
@@ -6,7 +6,7 @@ const PostDetailDescription = () => {
 
   return (
     <Card sx={{ height: "500px", width: "100%", backgroundColor: "white" }}>
-      {post.post_description}
+      <Typography>{post.post_description}</Typography>
     </Card>
   );
 };
