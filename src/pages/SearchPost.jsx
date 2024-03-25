@@ -1,8 +1,8 @@
 import { Box, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import HomeOfferCard from "../components/homeItems/HomeOfferCard";
 import FiltersSearch from "../components/searchPostItems/FiltersSearch";
+import PostSearchCard from "../components/searchPostItems/PostSearchCard";
 import { useCategoryAndBrandFetch } from "../hooks/useCategoryAndBrandFetch";
 import { searchPostFetch } from "../services/post/searchPost";
 
@@ -67,11 +67,11 @@ const SearchPost = () => {
           }}
         />
       </Box>
-      <Grid container spacing={2}>
+      <Grid container spacing={10}>
         {posts &&
           posts.map((post) => (
-            <Grid key={post.post_id} item xs={3}>
-              <HomeOfferCard post={post} />
+            <Grid key={post.post_id} item xs={4}>
+              <PostSearchCard post={post} />
             </Grid>
           ))}
       </Grid>

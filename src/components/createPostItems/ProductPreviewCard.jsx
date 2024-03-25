@@ -8,7 +8,7 @@ const ProductPreviewCard = ({}) => {
   const post = useSelector(getNewPost);
   const { post_img, post_name, post_price, post_description } = post;
   return (
-    <Card sx={{ width: 350, height: 600 }}>
+    <Card sx={{ width: 550, height: 600 }}>
       <CardMedia
         sx={{
           objectFit: "contain",
