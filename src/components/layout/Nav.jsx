@@ -13,7 +13,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useState } from "react";
 
@@ -58,13 +58,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Nav() {
-  const [postName, setpostName] = useState("");
+  // const { postName } = useParams();
+  const [postName, setPostName] = useState("");
   const navigate = useNavigate();
   const handleInputChange = (event) => {
-    setpostName(event.target.value);
+    setPostName(event.target.value);
   };
   const handleSerchPost = () => {
-    if (postName != "") navigate(`/search/${postName}`);
+    if (postName != "") {
+      navigate(`/search/${postName}`);
+    }
   };
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -119,6 +122,12 @@ export default function Nav() {
         style={{ textDecoration: "none", color: "inherit" }}
       >
         <MenuItem onClick={handleMenuClose}>Publicar un producto</MenuItem>
+      </Link>
+      <Link
+        to="/createOffer"
+        style={{ textDecoration: "none", color: "inherit" }}
+      >
+        <MenuItem onClick={handleMenuClose}>Crear ofertas</MenuItem>
       </Link>
     </Menu>
   );

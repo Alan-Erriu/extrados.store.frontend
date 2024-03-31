@@ -4,13 +4,29 @@ import ProductPreviewCard from "../components/createPostItems/ProductPreviewCard
 import ErrorNotification from "../components/feedBack/ErrorNotification";
 import Progress from "../components/feedBack/Progress";
 import { useCategoryAndBrandFetch } from "../hooks/useCategoryAndBrandFetch";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { resetSate } from "../redux/post/createNewPostSlice";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const CreatePost = () => {
   const { allCategorys, allBrands, categoryAndBrandloading, error } =
     useCategoryAndBrandFetch();
-
+  const dispatch = useDispatch();
   const errorFetchForm = useSelector((state) => state.newPostState.statusFetch);
+  const errorMessage = useSelector((state) => state.newPostState.errorMessage);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (errorFetchForm && errorFetchForm === "success") {
+      navigate("/");
+      dispatch(resetSate());
+    }
+  }, [errorFetchForm]);
+
+  const resetStatusError = () => {
+    dispatch(resetSate());
+    return false;
+  };
   if (categoryAndBrandloading) {
     return (
       <Box
@@ -26,23 +42,9 @@ export const CreatePost = () => {
       </Box>
     );
   }
-  if (error.status) {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          width: "100vw",
-          height: "100vh",
-        }}
-      >
-        <ErrorNotification message={error.msg} />
-      </Box>
-    );
-  }
   return (
     <Box>
+      {error.status ? <ErrorNotification message={error.msg} /> : null}
       <Typography
         sx={{ mt: { xs: "3rem", md: "3rem" }, mb: "3rem" }}
         textAlign={"center"}
@@ -60,8 +62,12 @@ export const CreatePost = () => {
         Crear publicación
       </Typography>
       {errorFetchForm && errorFetchForm === "fail" ? (
-        <ErrorNotification message={"intente mas tarde"} />
+        <ErrorNotification
+          message={errorMessage}
+          handleClose={resetStatusError}
+        />
       ) : null}
+
       <Box
         sx={{
           display: "flex",

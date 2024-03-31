@@ -1,69 +1,99 @@
 import { Box, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Progress from "../components/feedBack/Progress";
 import FiltersSearch from "../components/searchPostItems/FiltersSearch";
 import PostSearchCard from "../components/searchPostItems/PostSearchCard";
-import { useCategoryAndBrandFetch } from "../hooks/useCategoryAndBrandFetch";
+import { getAllBrandsFetch } from "../services/brand/brandFetch";
+import { getAllCategorysFetch } from "../services/category/categoryFetch";
 import { searchPostFetch } from "../services/post/searchPost";
 
 const SearchPost = () => {
   const { postName } = useParams();
-  const [categoryState, setCategoryState] = useState("");
-  const [brandState, setBrandState] = useState("");
-  const [postLoading, setPostLoading] = useState(true);
+  const [categoryIdSelected, setCategoryIdSelected] = useState("");
+  const [brandIdSelected, setBrandIdSelected] = useState("");
   const [posts, setPosts] = useState([]);
   const [categorysFiltered, setCategorysFiltered] = useState([]);
   const [brandsFiltered, setBrandsFiltered] = useState([]);
-
-  const { allCategorys, allBrands, categoryAndBrandloading, error } =
-    useCategoryAndBrandFetch();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     const getPostByName = async () => {
       const data = {
         postName: postName,
-        postCategoryId: categoryState === "" ? 0 : categoryState,
-        postBrandId: brandState === "" ? 0 : brandState,
+        postCategoryId: categoryIdSelected === "" ? 0 : categoryIdSelected,
+        postBrandId: brandIdSelected === "" ? 0 : brandIdSelected,
       };
       try {
         const postsResponse = await searchPostFetch(data);
         setPosts(postsResponse);
-        setPostLoading(false);
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
     };
     getPostByName();
-  }, [postName, categoryState, brandState]);
+  }, [postName, brandIdSelected, categoryIdSelected]);
 
   useEffect(() => {
-    if (!postLoading) {
-      const uniqueCategorys = [
-        ...new Set(posts.map((post) => post.category_name)),
+    setBrandIdSelected(0);
+    setCategoryIdSelected(0);
+  }, [postName]);
+
+  useEffect(() => {
+    const data = {
+      postName: postName,
+    };
+    const getCategorysAndBrands = async () => {
+      const postsResponse = await searchPostFetch(data);
+      const categorysResponse = await getAllCategorysFetch();
+      const brandsResponse = await getAllBrandsFetch();
+      const uniqueCategorysName = [
+        ...new Set(postsResponse.map((post) => post.category_name)),
       ];
-      const categorysRelatedToPost = allCategorys.filter((category) =>
-        uniqueCategorys.includes(category.category_name)
+
+      const categorysRelatedToPost = categorysResponse.filter((category) =>
+        uniqueCategorysName.includes(category.category_name)
       );
-      const uniqueBrands = [...new Set(posts.map((post) => post.brand_name))];
-      const brandRelatedToPost = allBrands.filter((brand) =>
-        uniqueBrands.includes(brand.brand_name)
+
+      const uniqueBrandsName = [
+        ...new Set(postsResponse.map((post) => post.brand_name)),
+      ];
+      const brandRelatedToPost = brandsResponse.filter((brand) =>
+        uniqueBrandsName.includes(brand.brand_name)
       );
       setCategorysFiltered(categorysRelatedToPost);
       setBrandsFiltered(brandRelatedToPost);
-    }
-  }, [postLoading]);
+    };
+    getCategorysAndBrands();
+  }, [postName]);
 
+  if (loading)
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100vw",
+          height: "100vh",
+        }}
+      >
+        <Progress />
+      </Box>
+    );
   return (
     <Box sx={{ display: "flex", mt: "50px", ml: "10%", mr: "10%" }}>
       <Box>
         <FiltersSearch
           props={{
-            setCategoryState,
-            setBrandState,
+            setCategoryIdSelected,
             brandsFiltered,
             categorysFiltered,
-            categoryState,
-            brandState,
+            setBrandIdSelected,
+            categoryIdSelected,
+            brandIdSelected,
           }}
         />
       </Box>

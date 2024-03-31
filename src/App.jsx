@@ -8,6 +8,8 @@ import SearchPost from "./pages/SearchPost";
 import { CreatePost } from "./pages/CreatePost";
 import { Layout } from "./components/layout/Layout";
 import ErrorNotFound from "./pages/ErrorNotFound";
+import CreateOffer from "./pages/CreateOffer";
+import AddPostToOffers from "./pages/AddPostToOffers";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +40,14 @@ const router = createBrowserRouter([
       {
         path: "/createPost",
         element: <CreatePost />,
+      },
+      {
+        path: "/createOffer",
+        element: <CreateOffer />,
+      },
+      {
+        path: "/addPostToOffers",
+        element: <AddPostToOffers />,
       },
     ],
   },

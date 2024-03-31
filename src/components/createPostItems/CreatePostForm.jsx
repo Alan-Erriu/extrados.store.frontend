@@ -1,16 +1,10 @@
 import { Button, Container, MenuItem, Select, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-
-import {
-  createNewPost,
-  resetSate,
-  setNewPost,
-} from "../../redux/post/createNewPostSlice";
+import { createNewPost, setNewPost } from "../../redux/post/createNewPostSlice";
 
 const CreatePostForm = ({ allCategorys, allBrands }) => {
   const dispatch = useDispatch();
-
   const [formData, setFormData] = useState({
     post_name: "",
     post_description: "",
@@ -27,9 +21,6 @@ const CreatePostForm = ({ allCategorys, allBrands }) => {
   const handleFormSubmit = (event) => {
     event.preventDefault();
     dispatch(createNewPost(formData));
-    setTimeout(() => {
-      dispatch(resetSate());
-    }, 3000);
   };
 
   const handleInputChange = (event) => {

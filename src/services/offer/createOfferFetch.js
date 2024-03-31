@@ -1,13 +1,12 @@
 import apiClient from "../axiosConfig/ApiClient";
 
-export const createNewPostFetch = async (data) => {
+export const createOfferFetch = async (formData) => {
   const tokenLocalStorage = localStorage.getItem("accessToken");
   const headers = {
     Authorization: `Bearer ${tokenLocalStorage}`,
   };
-
-  const response = await apiClient.post("Post/create", data, {
+  const offerResponse = await apiClient.post("Offer/create", formData, {
     headers,
   });
-  return response;
+  return offerResponse.data;
 };

@@ -1,24 +1,26 @@
 import { Box, MenuItem, Select } from "@mui/material";
+import { useEffect } from "react";
 
 const FiltersSearch = ({
   props: {
     brandsFiltered,
     categorysFiltered,
-    setCategoryState,
-    setBrandState,
-    categoryState,
-    brandState,
+    setCategoryIdSelected,
+    setBrandIdSelected,
+    categoryIdSelected,
+    brandIdSelected,
   },
 }) => {
   const handleInputChangeCategory = (event) => {
     const newCategoryId = event.target.value;
-    setCategoryState(newCategoryId);
+    setCategoryIdSelected(newCategoryId);
   };
 
   const handleInputChangeBrand = (event) => {
     const newBrandId = event.target.value;
-    setBrandState(newBrandId);
+    setBrandIdSelected(newBrandId);
   };
+  useEffect(() => {}, [categorysFiltered, brandsFiltered]);
 
   return (
     <Box>
@@ -27,7 +29,7 @@ const FiltersSearch = ({
         required
         variant="outlined"
         name="category_id"
-        value={categoryState}
+        value={categoryIdSelected}
         displayEmpty
         onChange={handleInputChangeCategory}
         renderValue={(value) => {
@@ -52,7 +54,7 @@ const FiltersSearch = ({
         required
         variant="outlined"
         name="brand_id"
-        value={brandState}
+        value={brandIdSelected}
         displayEmpty
         onChange={handleInputChangeBrand}
         renderValue={(value) => {

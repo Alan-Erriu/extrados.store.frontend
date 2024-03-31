@@ -28,14 +28,10 @@ const RegisterForm = () => {
       navigate("/login");
     } catch (err) {
       console.log(err);
-      if (err.response && err.response.data === "The email is already in use")
-        setError(emailAlreadyInUse);
-      else if (
-        err.response &&
-        err.response.data === "The phone number is already in use"
-      )
-        setError(phoneNumberAlreadyInUse);
-      else setError(genericError);
+      if (err.response) {
+        return setError(err.response.data);
+      }
+      setError(genericError);
     } finally {
       setTimeout(() => {
         setError({ status: false });

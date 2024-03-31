@@ -5,7 +5,7 @@ import { getAllCategorysFetch } from "../services/category/categoryFetch";
 export const useCategoryAndBrandFetch = () => {
   const [allCategorys, setAllCategorys] = useState([]);
   const [allBrands, setAllBrands] = useState([]);
-  const [categoryAndBrandloading, setcategoryAndBrandloading] = useState(true);
+  const [categoryAndBrandloading, setcategoryAndBrandloading] = useState(false);
   const [error, setError] = useState({
     status: false,
     msg: "",
@@ -14,6 +14,7 @@ export const useCategoryAndBrandFetch = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setcategoryAndBrandloading(true);
         const categorysResponse = await getAllCategorysFetch();
         const brandsResponse = await getAllBrandsFetch();
         setAllCategorys(categorysResponse);
