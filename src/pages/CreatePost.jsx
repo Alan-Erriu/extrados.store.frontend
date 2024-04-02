@@ -64,7 +64,7 @@ export const CreatePost = () => {
       {errorFetchForm && errorFetchForm === "fail" ? (
         <ErrorNotification
           message={errorMessage}
-          handleClose={resetStatusError}
+          handleClose={() => resetStatusError}
         />
       ) : null}
 

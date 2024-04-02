@@ -129,6 +129,14 @@ export default function Nav() {
       >
         <MenuItem onClick={handleMenuClose}>Crear ofertas</MenuItem>
       </Link>
+      <Link
+        to="/addPostToOffers"
+        style={{ textDecoration: "none", color: "inherit" }}
+      >
+        <MenuItem onClick={handleMenuClose}>
+          Añadir productos a mis ofertas
+        </MenuItem>
+      </Link>
     </Menu>
   );
 

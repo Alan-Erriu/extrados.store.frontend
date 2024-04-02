@@ -1,5 +1,4 @@
 import { Box, MenuItem, Select } from "@mui/material";
-import { useEffect } from "react";
 
 const FiltersSearch = ({
   props: {
@@ -20,7 +19,6 @@ const FiltersSearch = ({
     const newBrandId = event.target.value;
     setBrandIdSelected(newBrandId);
   };
-  useEffect(() => {}, [categorysFiltered, brandsFiltered]);
 
   return (
     <Box>

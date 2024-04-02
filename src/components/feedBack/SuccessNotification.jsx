@@ -1,14 +1,38 @@
+import { Snackbar } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Stack from "@mui/material/Stack";
+import { useEffect, useState } from "react";
 
-export default function SuccessNotification(message) {
+export default function SuccessNotification({
+  message,
+  handleClose = () => {
+    return false;
+  },
+}) {
+  const [open, setOpen] = useState(true);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const isOpen = handleClose();
+      setOpen(isOpen);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+  if (!open) {
+    return null;
+  }
   return (
-    <Stack sx={{ width: "100%" }} spacing={2}>
-      <Alert severity="success" sx={{ backgroundColor: "white" }}>
-        <AlertTitle>Exito</AlertTitle>
-        {message}
-      </Alert>
-    </Stack>
+    <Snackbar
+      open={open}
+      autoHideDuration={3000}
+      onClose={() => setOpen(false)}
+    >
+      <Stack sx={{ width: "100%" }} spacing={2}>
+        <Alert severity="success" sx={{ backgroundColor: "white" }}>
+          <AlertTitle color={"black"}>{message}</AlertTitle>
+        </Alert>
+      </Stack>
+    </Snackbar>
   );
 }

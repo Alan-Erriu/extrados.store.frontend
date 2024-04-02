@@ -6,6 +6,7 @@ import { createOfferFetch } from "../services/offer/createOfferFetch";
 
 const CreateOffer = () => {
   const navigate = useNavigate();
+  const [error, setError] = useState({ errorStatus: false, msg: "" });
   const [formData, setFormData] = useState({
     offer_name: "",
     offer_date_start: "",
@@ -18,7 +19,36 @@ const CreateOffer = () => {
       await createOfferFetch(formData);
       navigate("/addPostToOffers");
     } catch (err) {
-      console.log(err);
+      if (
+        err.response &&
+        err.response.data &&
+        err.response.data.errors &&
+        err.response.data.errors.offer_date_expiration &&
+        err.response.data.errors.offer_date_expiration[0]
+      ) {
+        console.log(err);
+        return setError({
+          errorStatus: true,
+          msg: err.response.data.errors.offer_date_expiration[0],
+        });
+      }
+      if (
+        err.response &&
+        err.response.data &&
+        err.response.data.errors &&
+        err.response.data.errors.offer_date_start &&
+        err.response.data.errors.offer_date_start[0]
+      ) {
+        console.log(err);
+        return setError({
+          errorStatus: true,
+          msg: err.response.data.errors.offer_date_start[0],
+        });
+      }
+      setError({
+        errorStatus: true,
+        msg: "error inesperado",
+      });
     }
   };
 
@@ -31,6 +61,12 @@ const CreateOffer = () => {
   };
   return (
     <Container>
+      {error.errorStatus == true ? (
+        <ErrorNotification
+          message={error.msg}
+          handleClose={() => setError({ errorStatus: false, msg: "" })}
+        />
+      ) : null}
       <Typography
         sx={{ mt: { xs: "3rem", md: "3rem" }, mb: "4rem" }}
         textAlign={"center"}
@@ -68,7 +104,7 @@ const CreateOffer = () => {
           <TextField
             label="Fecha de inicio de la oferta"
             name="offer_date_start"
-            type="date"
+            type="datetime-local"
             value={formData.offer_date_start}
             onChange={handleInputChange}
             fullWidth
@@ -81,7 +117,7 @@ const CreateOffer = () => {
           <TextField
             label="Fecha de fin de la oferta"
             name="offer_date_expiration"
-            type="date"
+            type="datetime-local"
             value={formData.offer_date_expiration}
             onChange={handleInputChange}
             fullWidth

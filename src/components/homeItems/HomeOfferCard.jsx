@@ -6,7 +6,8 @@ import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 
 export default function HomeOfferCard({ post }) {
-  const { post_name, post_price, post_img, post_id } = post;
+  const { post_name, post_price, post_img, post_id, offer_status } = post;
+
   return (
     <Link
       to={`/post/${post_id}`}
@@ -21,9 +22,12 @@ export default function HomeOfferCard({ post }) {
             image={post_img}
             sx={{ objectFit: "contain" }}
           />
-          <Typography gutterBottom variant="h5" component="div">
-            En oferta
-          </Typography>
+          {offer_status ? (
+            <Typography gutterBottom variant="h5" component="div">
+              En oferta
+            </Typography>
+          ) : null}
+
           <Typography variant="body2" color="text.secondary">
             {post_name}
           </Typography>
