@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import ErrorNotification from "../components/feedBack/ErrorNotification";
 import { Link, useNavigate } from "react-router-dom";
 import { createOfferFetch } from "../services/offer/createOfferFetch";
+import { formatISO } from "date-fns";
+import { es } from "date-fns/locale";
 
 const CreateOffer = () => {
   const navigate = useNavigate();
@@ -16,7 +18,21 @@ const CreateOffer = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
-      await createOfferFetch(formData);
+      const formatDate = (dateTimeString) => {
+        const date = new Date(dateTimeString);
+        const formattedDate = formatISO(date);
+        return formattedDate;
+      };
+
+      const data = {
+        offer_name: formData.offer_name,
+        offer_date_start: formatDate(formData.offer_date_start),
+        offer_date_expiration: formatDate(formData.offer_date_expiration),
+      };
+
+      console.log(data);
+
+      await createOfferFetch(data);
       navigate("/addPostToOffers");
     } catch (err) {
       if (

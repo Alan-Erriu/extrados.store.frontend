@@ -7,6 +7,7 @@ import { Box, Button, MenuItem, Select, TextField } from "@mui/material";
 import { useState } from "react";
 import { useEffect } from "react";
 import { addPostToOffer } from "../../services/offer/addPostToOffer";
+import { formatDate } from "../../utilities/formatDateTolocalZone";
 
 export default function AddToOffersCard({
   props: {
@@ -36,7 +37,19 @@ export default function AddToOffersCard({
     const selectedOffer = offers.find(
       (o) => o.offer_id === formData.offer_post_offerId
     );
-    setOfferSelectedData(selectedOffer);
+    //cuando carga por primera vez no hay id seleccionado, entonces es null
+    if (selectedOffer && selectedOffer.offer_date_start) {
+      console.log(selectedOffer);
+
+      const offerDateFormated = {
+        offer_name: selectedOffer.offer_name,
+        offer_date_start: formatDate(selectedOffer.offer_date_start),
+        offer_date_expiration: formatDate(selectedOffer.offer_date_expiration),
+      };
+      setOfferSelectedData(offerDateFormated);
+
+      console.log(offerDateFormated);
+    }
   }, [formData.offer_post_offerId]);
 
   const addPostToOfferFetch = async () => {
@@ -47,7 +60,6 @@ export default function AddToOffersCard({
         status: true,
       });
       setEventListenerAddToOffer(!eventListenerAddToOffer);
-      console.log(formData);
     } catch (error) {
       console.log(error);
     }
@@ -109,7 +121,7 @@ export default function AddToOffersCard({
                     : "Seleccione una oferta";
                 }}
               >
-                <MenuItem disabled>Seleccione una Marca</MenuItem>
+                <MenuItem disabled>Seleccione una oferta</MenuItem>
                 {offers &&
                   offers.map((o) => (
                     <MenuItem key={o.offer_id} value={o.offer_id}>
@@ -145,15 +157,11 @@ export default function AddToOffersCard({
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Fecha de inicio:{" "}
-            {offerSelectedData &&
-              new Date(offerSelectedData.offer_date_start).toLocaleString()}
+            {offerSelectedData && offerSelectedData.offer_date_start}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Fecha de fin:{" "}
-            {offerSelectedData &&
-              new Date(
-                offerSelectedData.offer_date_expiration
-              ).toLocaleString()}
+            {offerSelectedData && offerSelectedData.offer_date_expiration}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Precio final:
