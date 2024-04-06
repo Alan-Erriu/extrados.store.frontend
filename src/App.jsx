@@ -1,15 +1,21 @@
-import Login from "./pages/Login";
-import "./styles/index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Register from "./pages/Register";
-import Home from "./pages/Home";
-import PostDetail from "./pages/PostDetail";
-import SearchPost from "./pages/SearchPost";
-import { CreatePost } from "./pages/CreatePost";
 import { Layout } from "./components/layout/Layout";
-import ErrorNotFound from "./pages/ErrorNotFound";
-import CreateOffer from "./pages/CreateOffer";
+import AdminRoute from "./components/roots/AdminRoute";
+import UnauthenticatedRoute from "./components/roots/UnauthenticatedRoute";
+import UserRoute from "./components/roots/UserRoute";
 import AddPostToOffers from "./pages/AddPostToOffers";
+import CreateOffer from "./pages/CreateOffer";
+import { CreatePost } from "./pages/CreatePost";
+import ErrorNotFound from "./pages/ErrorNotFound";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Logout from "./pages/Logout";
+import PostDetail from "./pages/PostDetail";
+import Register from "./pages/Register";
+import SearchPost from "./pages/SearchPost";
+import AdminMenu from "./pages/adminPages/AdminMenu";
+import CreateBrand from "./pages/adminPages/CreateBrand";
+import "./styles/index.css";
 
 const router = createBrowserRouter([
   {
@@ -21,14 +27,7 @@ const router = createBrowserRouter([
         path: "",
         element: <Home />,
       },
-      {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "/register",
-        element: <Register />,
-      },
+
       {
         path: "/post/:id",
         element: <PostDetail />,
@@ -38,16 +37,58 @@ const router = createBrowserRouter([
         element: <SearchPost />,
       },
       {
-        path: "/createPost",
-        element: <CreatePost />,
+        path: "",
+        element: <UserRoute />,
+        children: [
+          {
+            path: "/createPost",
+            element: <CreatePost />,
+          },
+          {
+            path: "/createOffer",
+            element: <CreateOffer />,
+          },
+          {
+            path: "/addPostToOffers",
+            element: <AddPostToOffers />,
+          },
+          {
+            path: "/logout",
+            element: <Logout />,
+          },
+        ],
       },
       {
-        path: "/createOffer",
-        element: <CreateOffer />,
+        path: "",
+        element: <AdminRoute />,
+        children: [
+          {
+            path: "/adminMenu",
+            element: <AdminMenu />,
+          },
+          {
+            path: "/createBrand",
+            element: <CreateBrand />,
+          },
+          {
+            path: "/logout",
+            element: <Logout />,
+          },
+        ],
       },
       {
-        path: "/addPostToOffers",
-        element: <AddPostToOffers />,
+        path: "",
+        element: <UnauthenticatedRoute />,
+        children: [
+          {
+            path: "/login",
+            element: <Login />,
+          },
+          {
+            path: "/register",
+            element: <Register />,
+          },
+        ],
       },
     ],
   },
