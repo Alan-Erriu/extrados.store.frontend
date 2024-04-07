@@ -7,6 +7,9 @@ const AdminMenu = () => {
       <Link to={"/createBrand"}>
         <Typography>Crear una nueva marca</Typography>
       </Link>
+      <Link to={"/createCategory"}>
+        <Typography>Crear una nueva categoría</Typography>
+      </Link>
     </Box>
   );
 };

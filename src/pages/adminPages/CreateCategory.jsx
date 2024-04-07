@@ -4,8 +4,9 @@ import BrandOrCategoryPreview from "../../components/createBrandAndCategoryItems
 import CreateBrandOrCategoryForm from "../../components/createBrandAndCategoryItems/CreateBrandOrCategoryForm";
 import ErrorNotification from "../../components/feedBack/ErrorNotification";
 import SuccessNotification from "../../components/feedBack/SuccessNotification";
-import { createBrandFetch } from "../../services/createBrand/createBrandFetch";
-const CreateBrand = () => {
+import { createCategoryFetch } from "../../services/createCategory/createCategoryFetch";
+
+const CreateCategory = () => {
   const [formData, setFormData] = useState({
     BrandOrCategoryName: "",
     BrandOrCategoryImg: "",
@@ -57,7 +58,7 @@ const CreateBrand = () => {
           xl: "70px",
         }}
       >
-        Crear marca
+        Crear categoría
       </Typography>
 
       <Box
@@ -73,7 +74,7 @@ const CreateBrand = () => {
             formData={formData}
             setError={setError}
             setSuccess={setSuccess}
-            createBrandOrCategotyFetch={createBrandFetch}
+            createBrandOrCategotyFetch={createCategoryFetch}
           />
         </Box>
         <Box sx={{ width: "50%" }}>
@@ -84,4 +85,4 @@ const CreateBrand = () => {
   );
 };
 
-export default CreateBrand;
+export default CreateCategory;

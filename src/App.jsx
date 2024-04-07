@@ -16,6 +16,7 @@ import SearchPost from "./pages/SearchPost";
 import AdminMenu from "./pages/adminPages/AdminMenu";
 import CreateBrand from "./pages/adminPages/CreateBrand";
 import "./styles/index.css";
+import CreateCategory from "./pages/adminPages/CreateCategory";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
           {
             path: "/createBrand",
             element: <CreateBrand />,
+          },
+          {
+            path: "/createCategory",
+            element: <CreateCategory />,
           },
           {
             path: "/logout",
