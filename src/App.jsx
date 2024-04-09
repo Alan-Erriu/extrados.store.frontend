@@ -17,6 +17,7 @@ import AdminMenu from "./pages/adminPages/AdminMenu";
 import CreateBrand from "./pages/adminPages/CreateBrand";
 import "./styles/index.css";
 import CreateCategory from "./pages/adminPages/CreateCategory";
+import Cart from "./pages/Cart";
 
 const router = createBrowserRouter([
   {
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
             path: "/logout",
             element: <Logout />,
           },
+          {
+            path: "/cart",
+            element: <Cart />,
+          },
         ],
       },
       {
@@ -78,6 +83,10 @@ const router = createBrowserRouter([
           {
             path: "/logout",
             element: <Logout />,
+          },
+          {
+            path: "/cart",
+            element: <Cart />,
           },
         ],
       },

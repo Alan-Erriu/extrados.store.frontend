@@ -3,6 +3,7 @@ import newPostSlice from "./post/createNewPostSlice";
 import categorySlice from "./categorySlice";
 import brandSlice from "./brandSlice";
 import postDetailSlice from "./post/postDetailSlice";
+import cartSlice from "./cartSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
     categoryState: categorySlice,
     brandState: brandSlice,
     postsDetailState: postDetailSlice,
+    cartState: cartSlice,
   },
 });

@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { createNewPostFetch } from "../../services/createNewPost/createNewPostFetch";
-import { useNavigate } from "react-router-dom";
 
 const newPostState = {
   post_name: "",
@@ -21,7 +20,7 @@ export const createNewPost = createAsyncThunk(
       return response.data;
     } catch (error) {
       if (
-        error.response.data.errors.post_description[0] ==
+        error.response.data.errors.post_description[0] ===
         "La descripción debe tener entre 6 y 2000 carcteres"
       ) {
         throw thunkApi.rejectWithValue({
