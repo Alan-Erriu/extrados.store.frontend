@@ -1,7 +1,4 @@
-import { Snackbar } from "@mui/material";
-import Alert from "@mui/material/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
-import Stack from "@mui/material/Stack";
+import { Paper, Snackbar, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 
 export default function ErrorNotification({
@@ -27,14 +24,17 @@ export default function ErrorNotification({
       open={open}
       autoHideDuration={3000}
       onClose={() => setOpen(false)}
+      sx={{ background: "white" }} // Fondo blanco para el Snackbar
     >
-      <Stack sx={{ width: "100%" }} spacing={2}>
-        <Alert severity="error" sx={{ backgroundColor: "white" }}>
-          <AlertTitle color={"black"}>
-            algo salió mal <br /> {message}
-          </AlertTitle>
-        </Alert>
-      </Stack>
+      <Paper elevation={3} sx={{ padding: 2 }}>
+        <Typography variant="body1" color="error">
+          X Algo salió mal:
+          <br />
+        </Typography>
+        <Typography variant="body1" color="black">
+          {message}
+        </Typography>
+      </Paper>
     </Snackbar>
   );
 }

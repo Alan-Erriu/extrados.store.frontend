@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -9,6 +9,8 @@ import { setPostDetail } from "../redux/post/postDetailSlice";
 import { getAllPostActiveFetch } from "../services/post/getPostFetch";
 import RelatedPosts from "../components/postDetailsItems/RelatedPosts";
 import Progress from "../components/feedBack/Progress";
+import ErrorNotification from "../components/feedBack/ErrorNotification";
+import { resetCartErrorSate } from "../redux/cartSlice";
 const PostDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -16,12 +18,14 @@ const PostDetail = () => {
   const [relatedPost, setRelatedPost] = useState([]);
   const [allPost, setAllPost] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { statusFetch, errorMessage } = useSelector((state) => state.cartState);
   const fetchData = async () => {
     try {
       dispatch(setPostDetail(id));
       const responsePost = await getAllPostActiveFetch();
       setAllPost(responsePost);
       setLoading(false);
+      console.log(statusFetch);
     } catch (error) {
       console.log(error);
     }
@@ -37,6 +41,11 @@ const PostDetail = () => {
     const limitedPosts = filteredPosts.slice(0, 4);
     setRelatedPost(limitedPosts);
   }, [post, allPost]);
+
+  const resetStateError = () => {
+    dispatch(resetCartErrorSate());
+    return false;
+  };
 
   if (loading) {
     return (
@@ -69,6 +78,12 @@ const PostDetail = () => {
         <PostDetailDescription />
       </Box>
       <RelatedPosts relatedPost={relatedPost} />
+      {statusFetch === "fail" ? (
+        <ErrorNotification
+          handleClose={resetStateError}
+          message={errorMessage}
+        />
+      ) : null}
     </Box>
   );
 };

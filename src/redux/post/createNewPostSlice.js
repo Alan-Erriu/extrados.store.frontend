@@ -19,10 +19,7 @@ export const createNewPost = createAsyncThunk(
       const response = await createNewPostFetch(formDataNewPost);
       return response.data;
     } catch (error) {
-      if (
-        error.response.data.errors.post_description[0] ===
-        "La descripción debe tener entre 6 y 2000 carcteres"
-      ) {
+      if (error.response.data.errors.post_description) {
         throw thunkApi.rejectWithValue({
           error: {
             message: error.response.data.errors.post_description[0],
@@ -30,7 +27,7 @@ export const createNewPost = createAsyncThunk(
         });
       } else {
         throw thunkApi.rejectWithValue({
-          error: "error",
+          error: error.response.data,
         });
       }
     }

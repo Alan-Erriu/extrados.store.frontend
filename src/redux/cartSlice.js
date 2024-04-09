@@ -6,6 +6,7 @@ import { addToCartfetch } from "../services/cart/addTocartFetch";
 const cartState = {
   cart: [],
   statusFetch: "",
+  errorMessage: "",
 };
 //traer el carrito del usuario por id, el id esta en el token
 export const getMyCart = createAsyncThunk("cart/getMyCart", async () => {
@@ -22,17 +23,37 @@ export const deleteOnePostFromCart = createAsyncThunk(
 );
 export const addOneToCart = createAsyncThunk(
   "cart/addOneQuantityToCart",
-  async (data) => {
-    console.log(data);
-    const response = await addToCartfetch(data);
-    return response.data;
+  async (data, thunkApi) => {
+    try {
+      const response = await addToCartfetch(data);
+      return response.data;
+    } catch (error) {
+      if (error.message === "Network Error") {
+        console.log(error);
+        throw thunkApi.rejectWithValue({
+          error: {
+            message: "Servidor en mantenimiento, intente mas tarde",
+          },
+        });
+      }
+      throw thunkApi.rejectWithValue({
+        error: {
+          message: error.response.data,
+        },
+      });
+    }
   }
 );
 
 export const cartSlice = createSlice({
   name: "cartState",
   initialState: cartState,
-  reducers: {},
+  reducers: {
+    resetCartErrorSate: (state, action) => {
+      state.statusFetch = "";
+      state.errorMessage = "";
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getMyCart.pending, (state, action) => {
@@ -69,8 +90,12 @@ export const cartSlice = createSlice({
         );
 
         state.cart = updatedCart;
+      })
+      .addCase(addOneToCart.rejected, (state, action) => {
+        state.statusFetch = "fail";
+        state.errorMessage = action.payload.error.message;
       });
   },
 });
-
+export const { resetCartErrorSate } = cartSlice.actions;
 export default cartSlice.reducer;
