@@ -3,11 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { registerFetch } from "../../services/register/registerFetch";
 import ErrorNotification from "../feedBack/ErrorNotification";
-import {
-  emailAlreadyInUse,
-  genericError,
-  phoneNumberAlreadyInUse,
-} from "./errorMessages.js";
+import { genericError } from "./errorMessages.js";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -52,7 +48,6 @@ const RegisterForm = () => {
       <Typography
         sx={{ mt: { xs: "3rem", md: "3rem" }, mb: "4rem" }}
         textAlign={"center"}
-        fontFamily={"fantasy"}
         variant="h3"
         color="#034a96"
         fontSize={{

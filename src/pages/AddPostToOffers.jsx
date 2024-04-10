@@ -1,10 +1,11 @@
 import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import AddToOffersCard from "../components/addPostToOffersItems/AddToOffersCard";
-import { getAllPostByUserId } from "../services/post/getAllPostByUserId";
-import { getAllOfferByUserId } from "../services/offer/getAllOfferByUserId";
-import SuccessNotification from "../components/feedBack/SuccessNotification";
+import { PostsIsEmpty } from "../components/addPostToOffersItems/PostsIsEmpty";
 import Progress from "../components/feedBack/Progress";
+import SuccessNotification from "../components/feedBack/SuccessNotification";
+import { getAllOfferByUserId } from "../services/offer/getAllOfferByUserId";
+import { getAllPostByUserId } from "../services/post/getAllPostByUserId";
 const AddPostToOffers = () => {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState(false);
@@ -69,6 +70,9 @@ const AddPostToOffers = () => {
         <Progress />
       </Box>
     );
+  if (posts.length < 1) {
+    return <PostsIsEmpty />;
+  }
   return (
     <Box>
       {addPostToOfferStatus.status ? (

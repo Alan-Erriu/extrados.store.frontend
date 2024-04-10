@@ -62,7 +62,6 @@ const LoginForm = () => {
       <Typography
         sx={{ mt: { xs: "3rem", md: "8rem" }, mb: "4rem" }}
         textAlign={"center"}
-        fontFamily={"fantasy"}
         variant="h3"
         color="#034a96"
         fontSize={{
@@ -75,6 +74,7 @@ const LoginForm = () => {
       >
         Extrados Store
       </Typography>
+
       <form onSubmit={handleFormSubmit}>
         <Container
           sx={{

@@ -11,6 +11,7 @@ import RelatedPosts from "../components/postDetailsItems/RelatedPosts";
 import Progress from "../components/feedBack/Progress";
 import ErrorNotification from "../components/feedBack/ErrorNotification";
 import { resetCartErrorSate } from "../redux/cartSlice";
+import SuccessNotification from "../components/feedBack/SuccessNotification";
 const PostDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -25,7 +26,6 @@ const PostDetail = () => {
       const responsePost = await getAllPostActiveFetch();
       setAllPost(responsePost);
       setLoading(false);
-      console.log(statusFetch);
     } catch (error) {
       console.log(error);
     }
@@ -82,6 +82,12 @@ const PostDetail = () => {
         <ErrorNotification
           handleClose={resetStateError}
           message={errorMessage}
+        />
+      ) : null}
+      {statusFetch === "postAdded" ? (
+        <SuccessNotification
+          handleClose={resetStateError}
+          message={"producto agregado"}
         />
       ) : null}
     </Box>

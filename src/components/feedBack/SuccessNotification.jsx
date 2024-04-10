@@ -1,7 +1,5 @@
 import { Snackbar } from "@mui/material";
-import Alert from "@mui/material/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
-import Stack from "@mui/material/Stack";
+import { Paper, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 
 export default function SuccessNotification({
@@ -28,11 +26,15 @@ export default function SuccessNotification({
       autoHideDuration={3000}
       onClose={() => setOpen(false)}
     >
-      <Stack sx={{ width: "100%" }} spacing={2}>
-        <Alert severity="success" sx={{ backgroundColor: "white" }}>
-          <AlertTitle color={"black"}>{message}</AlertTitle>
-        </Alert>
-      </Stack>
+      <Paper elevation={3} sx={{ padding: 2 }}>
+        <Typography variant="body1" color="green">
+          Exito:
+          <br />
+        </Typography>
+        <Typography variant="body1" color="black">
+          {message}
+        </Typography>
+      </Paper>
     </Snackbar>
   );
 }

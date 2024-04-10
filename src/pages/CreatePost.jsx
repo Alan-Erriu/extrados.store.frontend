@@ -48,7 +48,6 @@ export const CreatePost = () => {
       <Typography
         sx={{ mt: { xs: "3rem", md: "3rem" }, mb: "3rem" }}
         textAlign={"center"}
-        fontFamily={"fantasy"}
         variant="h3"
         color="#034a96"
         fontSize={{

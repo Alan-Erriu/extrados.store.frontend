@@ -4,15 +4,21 @@ import { getMyCart } from "../redux/cartSlice";
 import CartCard from "../components/cartItems/CartCard";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import CartIsEmpty from "../components/cartItems/CartIsEmpty";
+import Progress from "../components/feedBack/Progress";
 const Cart = () => {
   const dispatch = useDispatch();
-  const errorFetchForm = useSelector((state) => state.cartState.statusFetch);
+  const statusFetch = useSelector((state) => state.cartState.statusFetch);
   const cartPostsState = useSelector((state) => state.cartState.cart);
   useEffect(() => {
     dispatch(getMyCart());
-    console.log("se ejecuta el fetch de car");
   }, []);
-
+  if (statusFetch === "loading") {
+    return <Progress />;
+  }
+  if (cartPostsState.length < 1) {
+    return <CartIsEmpty />;
+  }
   return (
     <Box sx={{ marginTop: "5rem", minHeight: "47vh" }}>
       <Grid

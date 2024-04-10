@@ -23,9 +23,14 @@ export const deleteOnePostFromCart = createAsyncThunk(
 );
 export const addOneToCart = createAsyncThunk(
   "cart/addOneQuantityToCart",
-  async (data, thunkApi) => {
+  async (post, thunkApi) => {
     try {
+      const data = {
+        post_id: post.post_id,
+        quantity: post.quantity,
+      };
       const response = await addToCartfetch(data);
+
       return response.data;
     } catch (error) {
       if (error.message === "Network Error") {
@@ -68,7 +73,11 @@ export const cartSlice = createSlice({
         console.error(action.error);
         state.statusFetch = "fail";
       })
+      .addCase(deleteOnePostFromCart.pending, (state, action) => {
+        state.statusFetch = "loading";
+      })
       .addCase(deleteOnePostFromCart.fulfilled, (state, action) => {
+        state.statusFetch = "success";
         const postId = action.meta.arg;
         const itemToDelete = state.cart.find((item) => item.post_id === postId);
         if (itemToDelete.quantity > 1) {
@@ -83,13 +92,16 @@ export const cartSlice = createSlice({
       })
       .addCase(addOneToCart.fulfilled, (state, action) => {
         const { post_id } = action.meta.arg;
-        const updatedCart = state.cart.map((item) =>
-          item.post_id === post_id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
+        const existingItem = state.cart.find(
+          (item) => item.post_id === post_id
         );
+        if (existingItem) {
+          existingItem.quantity += 1;
+        } else {
+          state.cart.push(action.meta.arg);
+        }
 
-        state.cart = updatedCart;
+        state.statusFetch = "postAdded";
       })
       .addCase(addOneToCart.rejected, (state, action) => {
         state.statusFetch = "fail";

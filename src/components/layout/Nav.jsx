@@ -13,53 +13,24 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { alpha, styled } from "@mui/material/styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
-    width: "auto",
-  },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
-  },
-}));
+import { getMyCart } from "../../redux/cartSlice";
 
 export default function Nav() {
   const [postName, setPostName] = useState("");
+  const cartPostsState = useSelector((state) => state.cartState.cart);
+  const [itemsCart, setItemsCart] = useState(0);
+  const userName = localStorage.getItem("userName");
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getMyCart());
+    setItemsCart(cartPostsState.length);
+  }, []);
+
   const navigate = useNavigate();
+
   const handleInputChange = (event) => {
     setPostName(event.target.value);
   };
@@ -109,22 +80,23 @@ export default function Nav() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      {userRole !== "admin" && userRole !== "user" && (
-        <>
+      {userRole !== "admin" &&
+        userRole !== "user" && [
           <Link
+            key="login"
             to="/login"
             style={{ textDecoration: "none", color: "inherit" }}
           >
             <MenuItem onClick={handleMenuClose}>Iniciar sesión</MenuItem>
-          </Link>
+          </Link>,
           <Link
+            key="register"
             to="/register"
             style={{ textDecoration: "none", color: "inherit" }}
           >
             <MenuItem onClick={handleMenuClose}>Registrarse</MenuItem>
-          </Link>
-        </>
-      )}
+          </Link>,
+        ]}
       {(userRole === "admin" || userRole === "user") && (
         <Link to="/logout" style={{ textDecoration: "none", color: "inherit" }}>
           <MenuItem onClick={handleMenuClose}>Cerrar sesión</MenuItem>
@@ -156,7 +128,7 @@ export default function Nav() {
           aria-label="mostrar mis compras"
           color="inherit"
         >
-          <Badge badgeContent={4} color="error">
+          <Badge badgeContent={itemsCart} color="error">
             <ShoppingCartIcon />
           </Badge>
         </IconButton>
@@ -294,12 +266,11 @@ export default function Nav() {
                 aria-label="mostrar mis compras"
                 color="inherit"
               >
-                <Badge badgeContent={4} color="error">
+                <Badge badgeContent={cartPostsState.length} color="error">
                   <ShoppingCartIcon />
                 </Badge>
               </IconButton>
             </Link>
-
             <IconButton
               size="large"
               edge="end"
@@ -311,6 +282,7 @@ export default function Nav() {
             >
               <AccountCircle />
             </IconButton>
+            {userName}
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
