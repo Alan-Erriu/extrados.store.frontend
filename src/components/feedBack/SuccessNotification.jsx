@@ -1,5 +1,4 @@
-import { Snackbar } from "@mui/material";
-import { Paper, Typography } from "@mui/material";
+import { Paper, Snackbar, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 
 export default function SuccessNotification({

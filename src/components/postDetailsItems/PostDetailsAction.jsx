@@ -1,7 +1,6 @@
 import { Button, Card, Typography } from "@mui/material";
-import { useSelector } from "react-redux";
-import { addOneToCart, getMyCart } from "../../redux/cartSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addOneToCart } from "../../redux/cartSlice";
 
 export const PostDetailsAction = () => {
   const post = useSelector((state) => state.postsDetailState.post);

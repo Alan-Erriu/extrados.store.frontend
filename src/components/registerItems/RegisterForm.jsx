@@ -25,13 +25,9 @@ const RegisterForm = () => {
     } catch (err) {
       console.log(err);
       if (err.response) {
-        return setError(err.response.data);
+        return setError({ status: true, message: err.response.data });
       }
       setError(genericError);
-    } finally {
-      setTimeout(() => {
-        setError({ status: false });
-      }, 5000);
     }
   };
 
@@ -44,7 +40,12 @@ const RegisterForm = () => {
   };
   return (
     <Container>
-      {error.status ? <ErrorNotification message={error.message} /> : null}
+      {error.status ? (
+        <ErrorNotification
+          message={error.message}
+          handleClose={setError({ status: false, message: "" })}
+        />
+      ) : null}
       <Typography
         sx={{ mt: { xs: "3rem", md: "3rem" }, mb: "4rem" }}
         textAlign={"center"}

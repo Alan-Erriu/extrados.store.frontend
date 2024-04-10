@@ -1,12 +1,12 @@
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import RemoveIcon from "@mui/icons-material/Remove";
-import AddIcon from "@mui/icons-material/Add";
 import { useDispatch } from "react-redux";
 import { addOneToCart, deleteOnePostFromCart } from "../../redux/cartSlice";
 const CartCard = ({ img, name, quantity, price, id }) => {
@@ -16,11 +16,15 @@ const CartCard = ({ img, name, quantity, price, id }) => {
     dispatch(deleteOnePostFromCart(id));
   };
   const hadleClickAddOnToCart = () => {
-    const data = {
+    const postData = {
       post_id: id,
       quantity: 1,
+      name,
+      price,
+      img,
     };
-    dispatch(addOneToCart(data));
+
+    dispatch(addOneToCart(postData));
   };
   return (
     <Card

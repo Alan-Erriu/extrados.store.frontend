@@ -14,20 +14,21 @@ import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { getMyCart } from "../../redux/cartSlice";
 
 export default function Nav() {
   const [postName, setPostName] = useState("");
-  const cartPostsState = useSelector((state) => state.cartState.cart);
-  const [itemsCart, setItemsCart] = useState(0);
+  const cartState = useSelector((state) => state.cartState);
   const userName = localStorage.getItem("userName");
+  const token = localStorage.getItem("accessToken");
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getMyCart());
-    setItemsCart(cartPostsState.length);
-  }, []);
+    if (token) {
+      dispatch(getMyCart());
+    }
+  }, [cartState.event]);
 
   const navigate = useNavigate();
 
@@ -128,7 +129,7 @@ export default function Nav() {
           aria-label="mostrar mis compras"
           color="inherit"
         >
-          <Badge badgeContent={itemsCart} color="error">
+          <Badge badgeContent={cartState.cart.length} color="error">
             <ShoppingCartIcon />
           </Badge>
         </IconButton>
@@ -266,7 +267,7 @@ export default function Nav() {
                 aria-label="mostrar mis compras"
                 color="inherit"
               >
-                <Badge badgeContent={cartPostsState.length} color="error">
+                <Badge badgeContent={cartState.cart.length} color="error">
                   <ShoppingCartIcon />
                 </Badge>
               </IconButton>

@@ -1,4 +1,3 @@
-import { jwtDecode } from "jwt-decode";
 import { Navigate, Outlet } from "react-router-dom";
 
 const UserRoute = () => {

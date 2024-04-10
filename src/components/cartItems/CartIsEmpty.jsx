@@ -1,6 +1,6 @@
 import { Button, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
+import { Link } from "react-router-dom";
 
 const CartIsEmpty = () => {
   return (

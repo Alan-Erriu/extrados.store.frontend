@@ -1,6 +1,6 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 import ErrorNotFound from "../../pages/ErrorNotFound";
-import { Navigate, Outlet } from "react-router-dom";
 
 const UnauthenticatedRoute = () => {
   const validateUser = () => {

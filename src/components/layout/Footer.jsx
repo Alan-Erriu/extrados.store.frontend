@@ -1,9 +1,9 @@
-import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import { IconButton } from "@mui/material";
 import { GitHub, LinkedIn } from "@mui/icons-material";
+import { IconButton } from "@mui/material";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
 
 export default function GuestFooter() {
   return (

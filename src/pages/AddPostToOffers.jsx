@@ -6,6 +6,7 @@ import Progress from "../components/feedBack/Progress";
 import SuccessNotification from "../components/feedBack/SuccessNotification";
 import { getAllOfferByUserId } from "../services/offer/getAllOfferByUserId";
 import { getAllPostByUserId } from "../services/post/getAllPostByUserId";
+import ErrorNotification from "../components/feedBack/ErrorNotification";
 const AddPostToOffers = () => {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState(false);
@@ -36,7 +37,6 @@ const AddPostToOffers = () => {
     try {
       const responseOffer = await getAllOfferByUserId();
       setOffers(responseOffer);
-      console.log(responseOffer);
     } catch (error) {
       console.log(error);
     }
@@ -79,6 +79,12 @@ const AddPostToOffers = () => {
         <SuccessNotification
           handleClose={handleSuccesNotification}
           message={addPostToOfferStatus.msg}
+        />
+      ) : null}
+      {error ? (
+        <ErrorNotification
+          handleClose={setError(false)}
+          message={"algo salio mal"}
         />
       ) : null}
       <Box sx={{ mt: "50px", ml: "10%", mr: "10%" }}>

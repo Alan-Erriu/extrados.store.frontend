@@ -1,6 +1,5 @@
+import { Button, Container, TextField } from "@mui/material";
 import React from "react";
-import { Box, Typography, TextField, Button, Container } from "@mui/material";
-import { createBrandFetch } from "../../services/createBrand/createBrandFetch";
 const CreateBrandOrCategoryForm = ({
   setFormData,
   formData,

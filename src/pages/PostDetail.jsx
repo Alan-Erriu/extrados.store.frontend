@@ -1,17 +1,17 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import ErrorNotification from "../components/feedBack/ErrorNotification";
+import Progress from "../components/feedBack/Progress";
+import SuccessNotification from "../components/feedBack/SuccessNotification";
 import PostDetailDescription from "../components/postDetailsItems/PostDetailDescription";
 import PostDetailImage from "../components/postDetailsItems/PostDetailImage";
 import { PostDetailsAction } from "../components/postDetailsItems/PostDetailsAction";
+import RelatedPosts from "../components/postDetailsItems/RelatedPosts";
+import { resetCartErrorSate } from "../redux/cartSlice";
 import { setPostDetail } from "../redux/post/postDetailSlice";
 import { getAllPostActiveFetch } from "../services/post/getPostFetch";
-import RelatedPosts from "../components/postDetailsItems/RelatedPosts";
-import Progress from "../components/feedBack/Progress";
-import ErrorNotification from "../components/feedBack/ErrorNotification";
-import { resetCartErrorSate } from "../redux/cartSlice";
-import SuccessNotification from "../components/feedBack/SuccessNotification";
 const PostDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -84,7 +84,7 @@ const PostDetail = () => {
           message={errorMessage}
         />
       ) : null}
-      {statusFetch === "postAdded" ? (
+      {statusFetch === "success" ? (
         <SuccessNotification
           handleClose={resetStateError}
           message={"producto agregado"}

@@ -1,13 +1,13 @@
 import { Box, Typography } from "@mui/material";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import CreatePostForm from "../components/createPostItems/CreatePostForm";
 import ProductPreviewCard from "../components/createPostItems/ProductPreviewCard";
 import ErrorNotification from "../components/feedBack/ErrorNotification";
 import Progress from "../components/feedBack/Progress";
 import { useCategoryAndBrandFetch } from "../hooks/useCategoryAndBrandFetch";
-import { useDispatch, useSelector } from "react-redux";
 import { resetSate } from "../redux/post/createNewPostSlice";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 export const CreatePost = () => {
   const { allCategorys, allBrands, categoryAndBrandloading, error } =

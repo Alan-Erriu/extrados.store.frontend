@@ -7,13 +7,14 @@ const cartState = {
   cart: [],
   statusFetch: "",
   errorMessage: "",
+  event: false,
 };
-//traer el carrito del usuario por id, el id esta en el token
+
 export const getMyCart = createAsyncThunk("cart/getMyCart", async () => {
   const response = await getMyCartFetch();
   return response.data;
 });
-//disminuir en 1 la cantidad del carrito, si llega a 0 se borra
+
 export const deleteOnePostFromCart = createAsyncThunk(
   "cart/deleOneFromCart",
   async (postId) => {
@@ -77,31 +78,15 @@ export const cartSlice = createSlice({
         state.statusFetch = "loading";
       })
       .addCase(deleteOnePostFromCart.fulfilled, (state, action) => {
+        state.event = !state.event;
         state.statusFetch = "success";
-        const postId = action.meta.arg;
-        const itemToDelete = state.cart.find((item) => item.post_id === postId);
-        if (itemToDelete.quantity > 1) {
-          state.cart = state.cart.map((item) =>
-            item.post_id === postId
-              ? { ...item, quantity: item.quantity - 1 }
-              : item
-          );
-        } else {
-          state.cart = state.cart.filter((item) => item.post_id !== postId);
-        }
+      })
+      .addCase(addOneToCart.pending, (state, action) => {
+        state.statusFetch = "loading";
       })
       .addCase(addOneToCart.fulfilled, (state, action) => {
-        const { post_id } = action.meta.arg;
-        const existingItem = state.cart.find(
-          (item) => item.post_id === post_id
-        );
-        if (existingItem) {
-          existingItem.quantity += 1;
-        } else {
-          state.cart.push(action.meta.arg);
-        }
-
-        state.statusFetch = "postAdded";
+        state.event = !state.event;
+        state.statusFetch = "succes";
       })
       .addCase(addOneToCart.rejected, (state, action) => {
         state.statusFetch = "fail";
