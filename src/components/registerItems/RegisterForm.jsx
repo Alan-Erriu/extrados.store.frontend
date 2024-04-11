@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { registerFetch } from "../../services/register/registerFetch";
 import ErrorNotification from "../feedBack/ErrorNotification";
-import { genericError } from "./errorMessages.js";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -27,7 +26,10 @@ const RegisterForm = () => {
       if (err.response) {
         return setError({ status: true, message: err.response.data });
       }
-      setError(genericError);
+      setError({
+        status: true,
+        message: "Intente más tarde",
+      });
     }
   };
 
@@ -43,7 +45,7 @@ const RegisterForm = () => {
       {error.status ? (
         <ErrorNotification
           message={error.message}
-          handleClose={setError({ status: false, message: "" })}
+          handleClose={() => setError({ status: false, message: "" })}
         />
       ) : null}
       <Typography
@@ -61,6 +63,7 @@ const RegisterForm = () => {
       >
         Extrados Store
       </Typography>
+
       <form onSubmit={handleFormSubmit}>
         <Container
           sx={{

@@ -66,7 +66,7 @@ export const cartSlice = createSlice({
         state.statusFetch = "loading";
       })
       .addCase(getMyCart.fulfilled, (state, action) => {
-        state.statusFetch = "success";
+        state.statusFetch = "";
         state.cart = action.payload.post;
         state.total = action.payload.total;
       })
